@@ -26,6 +26,7 @@ export default class Game {
     subscribeEvents() {
         document.addEventListener('onResourceCreated', this);
         document.addEventListener('onResourceStockChanged', this);
+        document.addEventListener('onUnitCreated', this);
     }
 
     handleEvent(event) {
@@ -40,6 +41,10 @@ export default class Game {
         const resource = this._main.resources.find(event.detail.gameObject);
 
         resource.update();
+    }
+
+    onUnitCreated(event) {
+        this._main.units.raiseCount();
     }
 
     render() {

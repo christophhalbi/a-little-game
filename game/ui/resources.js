@@ -22,7 +22,7 @@ export default class UIResources {
     }
 
     render() {
-        return `<div id="${this._id}" class="ui-resources">
+        return `<div id="${this._id}">
             <span>Resources</span>
             <div>
             </div>
