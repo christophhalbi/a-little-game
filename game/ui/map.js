@@ -1,6 +1,7 @@
 
 import UIMapSquare from './map/square.js';
 import UIUnit from './unit.js';
+import UIBuilding from './building.js';
 
 export default class UIMap {
 
@@ -17,7 +18,17 @@ export default class UIMap {
     addUnit(gameObject) {
         const unit = new UIUnit(gameObject);
 
-        document.querySelector(`#${this._id} div.ui-map-source[data-game-object-id="${gameObject.position.id}"]`).insertAdjacentHTML('beforeend', unit.render());
+        document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${gameObject.position.id}"]`).insertAdjacentHTML('beforeend', unit.render());
+
+        unit.addClickListener();
+    }
+
+    addBuilding(gameObject) {
+        const building = new UIBuilding(gameObject);
+
+        document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${gameObject.position.id}"]`).insertAdjacentHTML('beforeend', building.render());
+
+        building.addClickListener();
     }
 
     render() {

@@ -1,7 +1,7 @@
 
 import GameObject from './object.js';
 
-export default class Unit extends GameObject {
+export default class Building extends GameObject {
 
     constructor(name, position) {
         super();
@@ -9,7 +9,7 @@ export default class Unit extends GameObject {
         this._name = name;
         this._position = position;
 
-        super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
+        super.fireCustomEvent('onBuildingCreated', { detail: { gameObject: this } });
     }
 
     get name() {

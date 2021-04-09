@@ -5,12 +5,8 @@ export default class UIMapSquare {
         this._gameObject = gameObject;
     }
 
-    get gameObject() {
-        return this._gameObject;
-    }
-
     render() {
-        return `<div class="ui-map-source" data-game-object-id="${this._gameObject.id}">
+        return `<div class="ui-map-square" data-game-object-id="${this._gameObject.id}">
         </div>`
     }
 }

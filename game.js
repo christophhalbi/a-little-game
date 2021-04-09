@@ -27,7 +27,10 @@ export default class Game {
         document.addEventListener('onResourceCreated', this);
         document.addEventListener('onResourceStockChanged', this);
         document.addEventListener('onUnitCreated', this);
+        document.addEventListener('onBuildingCreated', this);
         document.addEventListener('onMapSquareCreated', this);
+        document.addEventListener('onUIUnitClicked', this);
+        document.addEventListener('onUIBuildingClicked', this);
     }
 
     handleEvent(event) {
@@ -46,12 +49,23 @@ export default class Game {
 
     onUnitCreated(event) {
         this._main.map.addUnit(event.detail.gameObject);
-
         this._main.units.raiseCount();
+    }
+
+    onBuildingCreated(event) {
+        this._main.map.addBuilding(event.detail.gameObject);
     }
 
     onMapSquareCreated(event) {
         this._main.map.add(event.detail.gameObject);
+    }
+
+    onUIUnitClicked(event) {
+        this._main.selection.update(event.detail.gameObject);
+    }
+
+    onUIBuildingClicked(event) {
+        this._main.selection.update(event.detail.gameObject);
     }
 
     render() {

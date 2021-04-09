@@ -1,12 +1,12 @@
 
-export default class UIUnit {
+export default class UIBuilding {
 
     constructor(gameObject) {
         this._gameObject = gameObject;
     }
 
     handleEvent(event) {
-        const customEvent = new CustomEvent('onUIUnitClicked', { detail: { gameObject: this._gameObject } });
+        const customEvent = new CustomEvent('onUIBuildingClicked', { detail: { gameObject: this._gameObject } });
         document.dispatchEvent(customEvent);
     }
 
@@ -15,7 +15,7 @@ export default class UIUnit {
     }
 
     render() {
-        return `<div class="ui-unit" data-game-object-id="${this._gameObject.id}">
+        return `<div class="ui-bulding" data-game-object-id="${this._gameObject.id}">
             <span>${this._gameObject.name}</span>
         </div>`
     }
