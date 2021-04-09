@@ -1,0 +1,15 @@
+
+#ui-map {
+    margin: 0 auto;
+    width: 800px;
+    height: 800px;
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.ui-map-source {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
