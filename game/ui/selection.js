@@ -5,8 +5,16 @@ export default class UISelection {
         this._id = 'ui-selection';
     }
 
-    update(gameObject) {
-        document.querySelector(`#${this._id} div`).innerHTML = gameObject.name;
+    update() {
+        document.querySelector(`#${this._id} div`).innerHTML = this._gameObject.name;
+    }
+
+    get() {
+        return this._gameObject;
+    }
+
+    set(gameObject) {
+        this._gameObject = gameObject;
     }
 
     render() {

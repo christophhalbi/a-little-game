@@ -11,4 +11,12 @@ export default class GameMapSquare extends GameObject {
 
         super.fireCustomEvent('onMapSquareCreated', { detail: { gameObject: this } });
     }
+
+    get x() {
+        return this._x;
+    }
+
+    get y() {
+        return this._y;
+    }
 }

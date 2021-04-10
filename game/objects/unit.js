@@ -8,6 +8,7 @@ export default class Unit extends GameObject {
 
         this._name = name;
         this._position = position;
+        this._moveable = true;
 
         super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
     }
@@ -18,5 +19,10 @@ export default class Unit extends GameObject {
 
     get position() {
         return this._position;
+    }
+
+    updatePosition(position) {
+        this._position = position;
+        super.fireCustomEvent('onUnitMoved', { detail: { gameObject: this } });
     }
 }

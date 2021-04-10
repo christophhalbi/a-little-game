@@ -10,7 +10,7 @@ export default class UIBuilding {
         document.dispatchEvent(customEvent);
     }
 
-    addClickListener() {
+    addListener() {
         document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
     }
 

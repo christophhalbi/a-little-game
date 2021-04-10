@@ -12,6 +12,8 @@ export default class GameData {
     _buildings = [];
     _units     = [];
 
+    _movements = [];
+
     constructor() {
 
     }
@@ -30,15 +32,45 @@ export default class GameData {
         this._units.push(new Unit('Soldier', this._map.square(8, 1)));
         this._units.push(new Unit('Soldier', this._map.square(8, 2)));
 
-        let runInterval = this.runInterval.bind(this);
+        let runResourceInterval = this.runResourceInterval.bind(this);
 
-        setInterval(runInterval, 5000);
+        setInterval(runResourceInterval, 5000);
+
+        let runMovementInterval = this.runMovementInterval.bind(this);
+
+        setInterval(runMovementInterval, 1000);
     }
 
-    runInterval() {
-        console.log('interval run');
-
+    runResourceInterval() {
         this._resources.forEach(resource => resource.raiseStock());
     }
 
+    runMovementInterval() {
+        this._movements.forEach((item, index, arr) => {
+            const currentX = item[0].position.x;
+            const currentY = item[0].position.y;
+            const toX = item[1].x;
+            const toY = item[1].y;
+
+            if (currentX === toX && currentY == toY) {
+                arr.splice(index, 1);
+            }
+            else if (currentX < toX) {
+                item[0].updatePosition(this._map.square(currentX + 1, currentY));
+            }
+            else if (currentX > toX) {
+                item[0].updatePosition(this._map.square(currentX - 1, currentY));
+            }
+            else if (currentY < toY) {
+                item[0].updatePosition(this._map.square(currentX, currentY + 1));
+            }
+            else if (currentY > toY) {
+                item[0].updatePosition(this._map.square(currentX, currentY -1 ));
+            }
+        });
+    }
+
+    addMovement(gameObject, to) {
+        this._movements.push([gameObject, to]);
+    }
 }

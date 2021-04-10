@@ -3,8 +3,14 @@ export default class GameObject {
 
     static objectCounter = 1;
 
+    _moveable = false;
+
     constructor() {
         this._id = GameObject.objectCounter++;
+    }
+
+    get moveable() {
+        return this._moveable;
     }
 
     get id() {

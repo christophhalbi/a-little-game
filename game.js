@@ -27,10 +27,12 @@ export default class Game {
         document.addEventListener('onResourceCreated', this);
         document.addEventListener('onResourceStockChanged', this);
         document.addEventListener('onUnitCreated', this);
+        document.addEventListener('onUnitMoved', this);
         document.addEventListener('onBuildingCreated', this);
         document.addEventListener('onMapSquareCreated', this);
         document.addEventListener('onUIUnitClicked', this);
         document.addEventListener('onUIBuildingClicked', this);
+        document.addEventListener('onUIMoveRequest', this);
     }
 
     handleEvent(event) {
@@ -43,13 +45,17 @@ export default class Game {
 
     onResourceStockChanged(event) {
         const resource = this._main.resources.find(event.detail.gameObject);
-
         resource.update();
     }
 
     onUnitCreated(event) {
         this._main.map.addUnit(event.detail.gameObject);
         this._main.units.raiseCount();
+    }
+
+    onUnitMoved(event) {
+        const unit = this._main.map.findUnit(event.detail.gameObject);
+        unit.move();
     }
 
     onBuildingCreated(event) {
@@ -61,11 +67,21 @@ export default class Game {
     }
 
     onUIUnitClicked(event) {
-        this._main.selection.update(event.detail.gameObject);
+        this._main.selection.set(event.detail.gameObject);
+        this._main.selection.update();
     }
 
     onUIBuildingClicked(event) {
-        this._main.selection.update(event.detail.gameObject);
+        this._main.selection.set(event.detail.gameObject);
+        this._main.selection.update();
+    }
+
+    onUIMoveRequest(event) {
+        const gameObject = this._main.selection.get();
+
+        if (gameObject && gameObject.moveable) {
+            this._data.addMovement(gameObject, event.detail.gameObject);
+        }
     }
 
     render() {

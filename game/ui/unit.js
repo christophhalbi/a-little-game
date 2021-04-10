@@ -10,8 +10,12 @@ export default class UIUnit {
         document.dispatchEvent(customEvent);
     }
 
-    addClickListener() {
+    addListener() {
         document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
+    }
+
+    move() {
+        document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`));
     }
 
     render() {
