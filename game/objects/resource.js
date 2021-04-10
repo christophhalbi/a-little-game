@@ -19,6 +19,10 @@ export default class Resource extends GameObject {
         return this._stock;
     }
 
+    get unitsPerInterval() {
+        return this._unitsPerInterval;
+    }
+
     raiseStock() {
         this._stock += this._unitsPerInterval;
 
