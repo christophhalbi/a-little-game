@@ -1,8 +1,10 @@
 
-export default class UISidebar {
+import UIObject from './object.js';
+
+export default class UISidebar extends UIObject {
 
     constructor() {
-
+        super();
     }
 
     render() {

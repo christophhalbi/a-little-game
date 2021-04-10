@@ -1,12 +1,14 @@
 
+import UIObject from './object.js';
 import UIResources from './resources.js';
 import UIUnits from './units.js';
 import UIMap from './map.js';
 import UISelection from './selection.js';
 
-export default class UIMain {
+export default class UIMain extends UIObject {
 
     constructor() {
+        super();
         this._resources = new UIResources();
         this._units = new UIUnits();
         this._map = new UIMap();

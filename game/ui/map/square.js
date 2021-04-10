@@ -1,7 +1,10 @@
 
-export default class UIMapSquare {
+import UIObject from './../object.js';
+
+export default class UIMapSquare extends UIObject {
 
     constructor(gameObject) {
+        super();
         this._gameObject = gameObject;
     }
 
@@ -9,13 +12,12 @@ export default class UIMapSquare {
         if (event.which == 3) {
             event.preventDefault();
 
-            const customEvent = new CustomEvent('onUIMoveRequest', { detail: { gameObject: this._gameObject } });
-            document.dispatchEvent(customEvent);
+            super.fireCustomEvent('onUIMoveRequest', { detail: { gameObject: this._gameObject } });
         }
     }
 
     addListener() {
-        document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`).addEventListener('mousedown', this);
+        document.querySelector(`div.ui-map-square[data-game-object-id="${this._gameObject.id}"]`).addEventListener('mousedown', this);
     }
 
     render() {

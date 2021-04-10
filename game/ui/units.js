@@ -1,7 +1,10 @@
 
-export default class UIUnits {
+import UIObject from './object.js';
+
+export default class UIUnits extends UIObject {
 
     constructor() {
+        super();
         this._id = 'ui-resources';
         this._count = 0;
     }

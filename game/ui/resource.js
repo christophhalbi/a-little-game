@@ -1,7 +1,10 @@
 
-export default class UIResource {
+import UIObject from './object.js';
+
+export default class UIResource extends UIObject {
 
     constructor(gameObject) {
+        super();
         this._gameObject = gameObject;
     }
 
@@ -10,7 +13,7 @@ export default class UIResource {
     }
 
     update() {
-        document.querySelector(`*[data-game-object-id="${this._gameObject.id}"] span.stock`).innerHTML = this._gameObject.stock;
+        document.querySelector(`div.ui-resource[data-game-object-id="${this._gameObject.id}"] span.stock`).innerHTML = this._gameObject.stock;
     }
 
     render() {

@@ -1,21 +1,23 @@
 
-export default class UIUnit {
+import UIObject from './object.js';
+
+export default class UIUnit extends UIObject {
 
     constructor(gameObject) {
+        super();
         this._gameObject = gameObject;
     }
 
     handleEvent(event) {
-        const customEvent = new CustomEvent('onUIUnitClicked', { detail: { gameObject: this._gameObject } });
-        document.dispatchEvent(customEvent);
+        super.fireCustomEvent('onUIUnitClicked', { detail: { gameObject: this._gameObject } });
     }
 
     addListener() {
-        document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
+        document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
     }
 
     move() {
-        document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`));
+        document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`));
     }
 
     render() {

@@ -1,17 +1,19 @@
 
-export default class UIBuilding {
+import UIObject from './object.js';
+
+export default class UIBuilding extends UIObject {
 
     constructor(gameObject) {
+        super();
         this._gameObject = gameObject;
     }
 
     handleEvent(event) {
-        const customEvent = new CustomEvent('onUIBuildingClicked', { detail: { gameObject: this._gameObject } });
-        document.dispatchEvent(customEvent);
+        super.fireCustomEvent('onUIBuildingClicked', { detail: { gameObject: this._gameObject } });
     }
 
     addListener() {
-        document.querySelector(`div[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
+        document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
     }
 
     render() {
