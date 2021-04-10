@@ -3,7 +3,6 @@ import UIObject from './object.js';
 import UIResources from './resources.js';
 import UIUnits from './units.js';
 import UIMap from './map.js';
-import UISelection from './selection.js';
 
 export default class UIMain extends UIObject {
 
@@ -12,7 +11,6 @@ export default class UIMain extends UIObject {
         this._resources = new UIResources();
         this._units = new UIUnits();
         this._map = new UIMap();
-        this._selection = new UISelection();
     }
 
     get resources() {
@@ -27,17 +25,21 @@ export default class UIMain extends UIObject {
         return this._map;
     }
 
-    get selection() {
-        return this._selection;
-    }
-
     render() {
-        return `<div id="ui-content">
-            <h2>Content</h2>
-            ${this._resources.render()}
-            ${this._units.render()}
-            ${this._selection.render()}
-            ${this._map.render()}
+        return `<div class="col-10" id="ui-content">
+            <div class="row">
+                <div class="col-6">
+                    ${this._resources.render()}
+                </div>
+                <div class="col-6">
+                    ${this._units.render()}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    ${this._map.render()}
+                </div>
+            </div>
         </div>`
     }
 }

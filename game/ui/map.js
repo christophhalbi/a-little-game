@@ -44,7 +44,7 @@ export default class UIMap extends UIObject {
     }
 
     render() {
-        return `<div id="${this._id}">
+        return `<div id="${this._id}" oncontextmenu="return false">
         </div>`
     }
 }

@@ -5,7 +5,7 @@ export default class UIUnits extends UIObject {
 
     constructor() {
         super();
-        this._id = 'ui-resources';
+        this._id = 'ui-units';
         this._count = 0;
     }
 

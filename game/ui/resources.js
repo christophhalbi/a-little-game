@@ -16,7 +16,7 @@ export default class UIResources extends UIObject {
 
         this._resources.set(gameObject.id, resource);
 
-        document.querySelector(`#${this._id} div`).insertAdjacentHTML('beforeend', resource.render());
+        document.querySelector(`#${this._id}`).insertAdjacentHTML('beforeend', resource.render());
     }
 
     find(gameObject) {
@@ -24,10 +24,6 @@ export default class UIResources extends UIObject {
     }
 
     render() {
-        return `<div id="${this._id}">
-            <span>Resources</span>
-            <div>
-            </div>
-        </div>`
+        return `<div id="${this._id}" class="row"></div>`
     }
 }

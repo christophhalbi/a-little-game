@@ -17,7 +17,7 @@ export default class UIResource extends UIObject {
     }
 
     render() {
-        return `<div class="ui-resource" data-game-object-id="${this._gameObject.id}">
+        return `<div class="ui-resource col-4" data-game-object-id="${this._gameObject.id}">
             <span>${this._gameObject.constructor.name} <span class="stock">${this._gameObject.stock}</span></span>
         </div>`
     }

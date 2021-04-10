@@ -67,17 +67,17 @@ export default class Game {
     }
 
     onUIUnitClicked(event) {
-        this._main.selection.set(event.detail.gameObject);
-        this._main.selection.update();
+        this._sidebar.selection.set(event.detail.gameObject);
+        this._sidebar.selection.update();
     }
 
     onUIBuildingClicked(event) {
-        this._main.selection.set(event.detail.gameObject);
-        this._main.selection.update();
+        this._sidebar.selection.set(event.detail.gameObject);
+        this._sidebar.selection.update();
     }
 
     onUIMoveRequest(event) {
-        const gameObject = this._main.selection.get();
+        const gameObject = this._sidebar.selection.get();
 
         if (gameObject && gameObject.moveable) {
             this._data.addMovement(gameObject, event.detail.gameObject);
@@ -85,7 +85,7 @@ export default class Game {
     }
 
     render() {
-        return `<div>
+        return `<div class="row">
             ${this._sidebar.render()}
             ${this._main.render()}
         </div>`;

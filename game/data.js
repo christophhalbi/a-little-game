@@ -25,12 +25,12 @@ export default class GameData {
 
         this._map = new GameMap(25, 25);
 
-        this._buildings.push(new Building('Castle', this._map.square(6, 5)));
+        this._buildings.push(new Building('C', this._map.square(6, 5)));
 
-        this._units.push(new Unit('Scout', this._map.square(5, 5)));
-        this._units.push(new Unit('Worker', this._map.square(5, 5)));
-        this._units.push(new Unit('Soldier', this._map.square(8, 1)));
-        this._units.push(new Unit('Soldier', this._map.square(8, 2)));
+        this._units.push(new Unit('S', this._map.square(5, 4)));
+        this._units.push(new Unit('W', this._map.square(5, 5)));
+        this._units.push(new Unit('S', this._map.square(8, 1)));
+        this._units.push(new Unit('S', this._map.square(8, 2)));
 
         let runResourceInterval = this.runResourceInterval.bind(this);
 
