@@ -4,7 +4,7 @@ import ResourceFood from './objects/resource/food.js';
 import ResourceIron from './objects/resource/iron.js';
 import Unit from './objects/unit.js';
 import Building from './objects/building.js';
-import GameMap from './data/map.js';
+import GameMap from './objects/map.js';
 
 export default class GameData {
 

@@ -1,6 +1,6 @@
 
 import GameMapSquare from "./map/square.js";
-import GameObject from "./../objects/object.js";
+import GameObject from "./object.js";
 
 export default class GameMap extends GameObject {
 
