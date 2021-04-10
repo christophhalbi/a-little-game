@@ -3,18 +3,13 @@ import GameObject from './object.js';
 
 export default class Unit extends GameObject {
 
-    constructor(name, position) {
+    constructor(position) {
         super();
 
-        this._name = name;
         this._position = position;
         this._moveable = true;
 
         super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
-    }
-
-    get name() {
-        return this._name;
     }
 
     get position() {

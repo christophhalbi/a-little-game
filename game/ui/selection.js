@@ -6,7 +6,7 @@ export default class UISelection {
     }
 
     update() {
-        document.querySelector(`#${this._id} div`).innerHTML = this._gameObject.name;
+        document.querySelector(`#${this._id} div`).innerHTML = this._gameObject.constructor.name;
     }
 
     get() {

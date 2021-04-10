@@ -18,7 +18,7 @@ export default class UIBuilding extends UIObject {
 
     render() {
         return `<div class="ui-bulding" data-game-object-id="${this._gameObject.id}">
-            <span>${this._gameObject.name}</span>
+            <span>${this._gameObject.constructor.name}</span>
         </div>`
     }
 }

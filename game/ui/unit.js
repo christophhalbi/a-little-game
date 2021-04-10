@@ -22,7 +22,7 @@ export default class UIUnit extends UIObject {
 
     render() {
         return `<div class="ui-unit" data-game-object-id="${this._gameObject.id}">
-            <span>${this._gameObject.name}</span>
+            <span>${this._gameObject.constructor.name}</span>
         </div>`
     }
 }
