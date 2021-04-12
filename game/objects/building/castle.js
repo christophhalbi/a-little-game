@@ -12,6 +12,8 @@ export default class Castle extends Building {
 
     static produces = new Map();
 
+    static workersNeeded = 10;
+
     constructor(position, built) {
         super(position, built);
     }

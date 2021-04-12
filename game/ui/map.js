@@ -58,6 +58,19 @@ export default class UIMap extends UIObject {
         return this._buildings.get(gameObject.id);
     }
 
+    findBuildingByPosition(gameObject) {
+        let find;
+
+        this._buildings.forEach((building) => {
+            if (building.gameObject.position.id === gameObject.position.id) {
+                find = building;
+                return;
+            }
+        });
+
+        return find;
+    }
+
     removeBuilding(gameObject) {
         const building = this.findBuilding(gameObject);
 

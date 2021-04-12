@@ -8,6 +8,16 @@ export default class UIBuilding extends UIObject {
         this._gameObject = gameObject;
     }
 
+    get gameObject() {
+        return this._gameObject;
+    }
+
+    homeUnit(unit) {
+        unit.remove();
+
+        super.fireCustomEvent('onUIBuildingHomeUnit', { detail: { gameObject: this._gameObject, unit: unit.gameObject } });
+    }
+
     handleEvent(event) {
         super.fireCustomEvent('onUIBuildingClicked', { detail: { gameObject: this._gameObject } });
     }

@@ -30,6 +30,7 @@ export default class Game {
         // unit-events
         document.addEventListener('onUnitCreated', this);
         document.addEventListener('onUnitMoved', this);
+        document.addEventListener('onUnitMoveDone', this);
         document.addEventListener('onUIUnitClicked', this);
         document.addEventListener('onUIMoveRequest', this);
         document.addEventListener('onUIUnitRemove', this);
@@ -38,6 +39,7 @@ export default class Game {
         document.addEventListener('onBuildingProgressChanged', this);
         document.addEventListener('onUIBuildingBuild', this);
         document.addEventListener('onUIBuildingClicked', this);
+        document.addEventListener('onUIBuildingHomeUnit', this);
         document.addEventListener('onUIBuildingRemove', this);
         // map-events
         document.addEventListener('onMapSquareCreated', this);
@@ -65,6 +67,15 @@ export default class Game {
     onUnitMoved(event) {
         const unit = this._main.map.findUnit(event.detail.gameObject);
         unit.move();
+    }
+
+    onUnitMoveDone(event) {
+        const unit = this._main.map.findUnit(event.detail.gameObject);
+        const building = this._main.map.findBuildingByPosition(unit.gameObject);
+
+        if (building) {
+            building.homeUnit(unit);
+        }
     }
 
     onUIUnitClicked(event) {
@@ -109,6 +120,10 @@ export default class Game {
 
     onUIBuildingClicked(event) {
         this._sidebar.selection.set(event.detail.gameObject);
+    }
+
+    onUIBuildingHomeUnit(event) {
+        this._data.homeUnit(event.detail.gameObject, event.detail.unit);
     }
 
     onUIBuildingRemove(event) {

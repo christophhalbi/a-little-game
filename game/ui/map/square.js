@@ -9,10 +9,10 @@ export default class UIMapSquare extends UIObject {
     }
 
     handleEvent(event) {
-        if (event.which == 1) {
+        if (event.which === 1) {
             super.fireCustomEvent('onUISquareClick', { detail: { gameObject: this._gameObject } });
         }
-        else if (event.which == 3) {
+        else if (event.which === 3) {
             super.fireCustomEvent('onUIMoveRequest', { detail: { gameObject: this._gameObject } });
         }
     }

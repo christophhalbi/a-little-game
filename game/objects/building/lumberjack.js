@@ -14,6 +14,8 @@ export default class Lumberjack extends Building {
         ['Wood', 5],
     ]);
 
+    static workersNeeded = 1;
+
     constructor(position, built) {
         super(position, built);
     }

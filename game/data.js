@@ -34,6 +34,7 @@ export default class GameData {
         this._units.push(new UnitSoldier(this._map.square(8, 1)));
         this._units.push(new UnitSoldier(this._map.square(8, 2)));
         this._units.push(new UnitWorker(this._map.square(12, 5)));
+        this._units.push(new UnitWorker(this._map.square(13, 5)));
 
         let runResourceInterval = this.runResourceInterval.bind(this);
 
@@ -51,7 +52,7 @@ export default class GameData {
     runResourceInterval() {
         this._resources.forEach(resource => {
             let unitsPerInterval = 0;
-            this._buildings.filter(building => building.built() && building.produces(resource)).forEach(building => {
+            this._buildings.filter(building => building.built() && building.working() && building.produces(resource)).forEach(building => {
                 unitsPerInterval += building.produce(resource);
             });
 
@@ -67,8 +68,9 @@ export default class GameData {
             const toX = item[1].x;
             const toY = item[1].y;
 
-            if (currentX === toX && currentY == toY) {
+            if (currentX === toX && currentY === toY) {
                 arr.splice(index, 1);
+                item[0].moveDone();
             }
             else if (currentX < toX) {
                 item[0].updatePosition(this._map.square(currentX + 1, currentY));
@@ -86,7 +88,7 @@ export default class GameData {
     }
 
     runBuildInterval() {
-        this._buildings.filter(building => !building.built()).forEach(building => {
+        this._buildings.filter(building => !building.built() && building.working()).forEach(building => {
             building.raiseBuild();
         });
     }
@@ -131,6 +133,10 @@ export default class GameData {
     removeBuilding(gameObject) {
         const index = this._buildings.findIndex(building => building.id === gameObject.id);
         this._buildings.splice(index, 1);
+    }
+
+    homeUnit(building, unit) {
+        building.homeUnit(unit);
     }
 
     removeUnit(gameObject) {

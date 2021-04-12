@@ -8,6 +8,10 @@ export default class UIUnit extends UIObject {
         this._gameObject = gameObject;
     }
 
+    get gameObject() {
+        return this._gameObject;
+    }
+
     handleEvent(event) {
         super.fireCustomEvent('onUIUnitClicked', { detail: { gameObject: this._gameObject } });
     }

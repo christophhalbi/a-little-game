@@ -6,6 +6,8 @@ export default class Building extends GameObject {
     _buildTime = 0;
     _level = 1;
 
+    _units = [];
+
     constructor(position, built = false) {
         super();
 
@@ -31,7 +33,15 @@ export default class Building extends GameObject {
     }
 
     built() {
-        return this.buildProgress == 100;
+        return this.buildProgress === 100;
+    }
+
+    working() {
+        return this._units.filter(unit => unit.isWorker()).length >= this.constructor.workersNeeded;
+    }
+
+    homeUnit(unit) {
+        this._units.push(unit);
     }
 
     raiseBuild() {
