@@ -4,6 +4,7 @@ import GameObject from './object.js';
 export default class Building extends GameObject {
 
     _buildTime = 0;
+    _level = 1;
 
     constructor(position, built = false) {
         super();
@@ -23,6 +24,10 @@ export default class Building extends GameObject {
 
     get buildProgress() {
         return (this._buildTime / this.constructor.timeToBuild) * 100;
+    }
+
+    get level() {
+        return this._level;
     }
 
     built() {

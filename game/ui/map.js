@@ -36,6 +36,14 @@ export default class UIMap extends UIObject {
         return this._units.get(gameObject.id);
     }
 
+    removeUnit(gameObject) {
+        const unit = this.findUnit(gameObject);
+
+        unit.remove();
+
+        this._units.delete(gameObject.id);
+    }
+
     addBuilding(gameObject) {
         const building = new UIBuilding(gameObject);
 
@@ -48,6 +56,14 @@ export default class UIMap extends UIObject {
 
     findBuilding(gameObject) {
         return this._buildings.get(gameObject.id);
+    }
+
+    removeBuilding(gameObject) {
+        const building = this.findBuilding(gameObject);
+
+        building.remove();
+
+        this._buildings.delete(gameObject.id);
     }
 
     render() {

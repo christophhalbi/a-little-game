@@ -9,7 +9,15 @@ export default class UISelection extends UIObject {
     }
 
     handleEvent(event) {
-        super.fireCustomEvent('onUIBuildingBuild', { detail: { gameObject: this._gameObject, building: event.target.dataset.building } });
+        if (event.target.dataset.building) {
+            super.fireCustomEvent('onUIBuildingBuild', { detail: { gameObject: this._gameObject, building: event.target.dataset.building } });
+        }
+        else if (event.target.dataset.level_up) {
+            console.log("level up");
+        }
+        else if (event.target.dataset.remove) {
+            super.fireCustomEvent(`onUI${Object.getPrototypeOf(this._gameObject.constructor).name}Remove`, { detail: { gameObject: this._gameObject } });
+        }
     }
 
     update() {
@@ -22,7 +30,7 @@ export default class UISelection extends UIObject {
     }
 
     addListener() {
-        const nodes = document.querySelectorAll(`#${this._id} div span.ui-build`);
+        const nodes = document.querySelectorAll(`#${this._id} div span.ui-action`);
 
         for (let node of nodes) {
             node.addEventListener('click', this);
@@ -33,22 +41,44 @@ export default class UISelection extends UIObject {
         return this._gameObject;
     }
 
+    unset() {
+        this._gameObject = null;
+        this.update();
+    }
+
     set(gameObject) {
         this._gameObject = gameObject;
         this.update();
     }
 
     renderDetails() {
+        if (this._gameObject === null) {
+            return '';
+        }
+
         if (this._gameObject.constructor.name === 'GameMapSquare') {
             return `
-                <span class="ui-build" data-building="Lumberjack">Build Lumberjack</span><br/>
-                <span class="ui-build" data-building="Farm">Build Farm</span>
+                <span class="ui-action" data-building="Lumberjack">Build Lumberjack</span><br/>
+                <span class="ui-action" data-building="Farm">Build Farm</span>
             `;
         }
         else {
-            return `
-                <span>${this._gameObject.constructor.name}
-            `
+            let content = `<span>${this._gameObject.constructor.name}<br/>`;
+
+            if (this._gameObject.built()) {
+                content += `
+                    <span class="level">Level ${this._gameObject.level}</span><br/>
+                    <span class="ui-action" data-level_up="1">Level up</span><br/>
+                    <span class="ui-action" data-remove="1">Remove</span>
+                `;
+            }
+            else {
+                content += `
+                    <span class="build-progress">${this._gameObject.buildProgress}%</span>
+                `;
+            }
+
+            return content;
         }
     }
 

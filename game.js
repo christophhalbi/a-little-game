@@ -32,11 +32,13 @@ export default class Game {
         document.addEventListener('onUnitMoved', this);
         document.addEventListener('onUIUnitClicked', this);
         document.addEventListener('onUIMoveRequest', this);
+        document.addEventListener('onUIUnitRemove', this);
         // building-events
         document.addEventListener('onBuildingCreated', this);
         document.addEventListener('onBuildingProgressChanged', this);
-        document.addEventListener('onUIBuildingClicked', this);
         document.addEventListener('onUIBuildingBuild', this);
+        document.addEventListener('onUIBuildingClicked', this);
+        document.addEventListener('onUIBuildingRemove', this);
         // map-events
         document.addEventListener('onMapSquareCreated', this);
         document.addEventListener('onUISquareClick', this);
@@ -77,6 +79,16 @@ export default class Game {
         }
     }
 
+    onUIUnitRemove(event) {
+        this._main.map.removeUnit(event.detail.gameObject);
+
+        this._main.units.lowerCount();
+
+        this._sidebar.selection.unset();
+
+        this._data.removeUnit(event.detail.gameObject);
+    }
+
     onBuildingCreated(event) {
         this._main.map.addBuilding(event.detail.gameObject);
     }
@@ -84,10 +96,8 @@ export default class Game {
     onBuildingProgressChanged(event) {
         const building = this._main.map.findBuilding(event.detail.gameObject);
         building.update();
-    }
 
-    onUIBuildingClicked(event) {
-        this._sidebar.selection.set(event.detail.gameObject);
+        this._sidebar.selection.update();
     }
 
     onUIBuildingBuild(event) {
@@ -95,6 +105,18 @@ export default class Game {
         if (building) {
             this._sidebar.selection.set(building);
         }
+    }
+
+    onUIBuildingClicked(event) {
+        this._sidebar.selection.set(event.detail.gameObject);
+    }
+
+    onUIBuildingRemove(event) {
+        this._main.map.removeBuilding(event.detail.gameObject);
+
+        this._sidebar.selection.unset();
+
+        this._data.removeBuilding(event.detail.gameObject);
     }
 
     onMapSquareCreated(event) {

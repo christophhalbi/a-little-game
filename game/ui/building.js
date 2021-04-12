@@ -21,6 +21,11 @@ export default class UIBuilding extends UIObject {
         node.querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress}%`;
     }
 
+    remove() {
+        const node = document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
+        node.remove();
+    }
+
     render() {
         return `<div class="ui-bulding" data-game-object-id="${this._gameObject.id}">
             <span>${this._gameObject.constructor.name}</span>

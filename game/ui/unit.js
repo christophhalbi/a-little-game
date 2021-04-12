@@ -20,6 +20,11 @@ export default class UIUnit extends UIObject {
         document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`));
     }
 
+    remove() {
+        const node = document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`);
+        node.remove();
+    }
+
     render() {
         return `<div class="ui-unit" data-game-object-id="${this._gameObject.id}">
             <span>${this._gameObject.constructor.name}</span>

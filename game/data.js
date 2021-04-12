@@ -55,10 +55,8 @@ export default class GameData {
                 unitsPerInterval += building.constructor.raisesResources.get(resource.constructor.name);
             });
 
-            if (unitsPerInterval !== 0) {
-                resource.updateUnitsPerInterval(unitsPerInterval);
-                resource.raiseStock();
-            }
+            resource.updateUnitsPerInterval(unitsPerInterval);
+            resource.raiseStock();
         });
     }
 
@@ -128,5 +126,15 @@ export default class GameData {
         }
 
         return affordable;
+    }
+
+    removeBuilding(gameObject) {
+        const index = this._buildings.findIndex(building => building.id === gameObject.id);
+        this._buildings.splice(index, 1);
+    }
+
+    removeUnit(gameObject) {
+        const index = this._units.findIndex(unit => unit.id === gameObject.id);
+        this._units.splice(index, 1);
     }
 }

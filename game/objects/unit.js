@@ -3,6 +3,8 @@ import GameObject from './object.js';
 
 export default class Unit extends GameObject {
 
+    _level = 1;
+
     constructor(position) {
         super();
 
@@ -16,8 +18,16 @@ export default class Unit extends GameObject {
         return this._position;
     }
 
+    get level() {
+        return this._level;
+    }
+
     updatePosition(position) { // TODO: find out why setter is not working
         this._position = position;
         super.fireCustomEvent('onUnitMoved', { detail: { gameObject: this } });
+    }
+
+    built() {
+        return true;
     }
 }
