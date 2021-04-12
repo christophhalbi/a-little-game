@@ -33,7 +33,7 @@ export default class GameData {
         this._units.push(new UnitSoldier(this._map.square(5, 4)));
         this._units.push(new UnitSoldier(this._map.square(8, 1)));
         this._units.push(new UnitSoldier(this._map.square(8, 2)));
-        this._units.push(new UnitWorker(this._map.square(5, 5)));
+        this._units.push(new UnitWorker(this._map.square(12, 5)));
 
         let runResourceInterval = this.runResourceInterval.bind(this);
 
@@ -51,8 +51,8 @@ export default class GameData {
     runResourceInterval() {
         this._resources.forEach(resource => {
             let unitsPerInterval = 0;
-            this._buildings.filter(building => building.built() && building.constructor.raisesResources.has(resource.constructor.name)).forEach(building => {
-                unitsPerInterval += building.constructor.raisesResources.get(resource.constructor.name);
+            this._buildings.filter(building => building.built() && building.produces(resource)).forEach(building => {
+                unitsPerInterval += building.produce(resource);
             });
 
             resource.updateUnitsPerInterval(unitsPerInterval);

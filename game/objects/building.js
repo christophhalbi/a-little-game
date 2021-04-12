@@ -39,4 +39,12 @@ export default class Building extends GameObject {
 
         super.fireCustomEvent('onBuildingProgressChanged', { detail: { gameObject: this } });
     }
+
+    produces(resourceObject) {
+        return this.constructor.produces.has(resourceObject.constructor.name);
+    }
+
+    produce(resourceObject) {
+        return this.constructor.produces.get(resourceObject.constructor.name) * this._position.produceFactor(this);
+    }
 }

@@ -22,7 +22,7 @@ export default class UIMapSquare extends UIObject {
     }
 
     render() {
-        return `<div class="ui-map-square" data-game-object-id="${this._gameObject.id}">
+        return `<div class="ui-map-square ${this._gameObject.displayClass()}" title="${this._gameObject.resourceInfo().join(', ')}" data-game-object-id="${this._gameObject.id}">
         </div>`
     }
 }

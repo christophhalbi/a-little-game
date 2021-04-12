@@ -18,7 +18,7 @@ export default class UIBuilding extends UIObject {
 
     update() {
         const node = document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
-        node.querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress}%`;
+        node.querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress.toFixed(2)}%`;
     }
 
     remove() {
@@ -29,7 +29,7 @@ export default class UIBuilding extends UIObject {
     render() {
         return `<div class="ui-bulding" data-game-object-id="${this._gameObject.id}">
             <span>${this._gameObject.constructor.name}</span>
-            <span class="build-progress">${this._gameObject.buildProgress}%</span>
+            <span class="build-progress">${this._gameObject.buildProgress.toFixed(2)}%</span>
         </div>`
     }
 }

@@ -10,7 +10,7 @@ export default class Castle extends Building {
         ['Iron', 2000],
     ]);
 
-    static raisesResources = new Map();
+    static produces = new Map();
 
     constructor(position, built) {
         super(position, built);

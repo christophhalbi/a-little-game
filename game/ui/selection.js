@@ -58,6 +58,7 @@ export default class UISelection extends UIObject {
 
         if (this._gameObject.constructor.name === 'GameMapSquare') {
             return `
+                <span>${this._gameObject.resourceInfo().join('<br/>')}</span><br/>
                 <span class="ui-action" data-building="Lumberjack">Build Lumberjack</span><br/>
                 <span class="ui-action" data-building="Farm">Build Farm</span>
             `;
@@ -74,7 +75,7 @@ export default class UISelection extends UIObject {
             }
             else {
                 content += `
-                    <span class="build-progress">${this._gameObject.buildProgress}%</span>
+                    <span class="build-progress">${this._gameObject.buildProgress.toFixed(2)}%</span>
                 `;
             }
 

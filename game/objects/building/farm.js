@@ -10,7 +10,7 @@ export default class Farm extends Building {
         ['Food', 100],
     ]);
 
-    static raisesResources = new Map([
+    static produces = new Map([
         ['Food', 5],
     ]);
 
