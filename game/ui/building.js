@@ -16,9 +16,15 @@ export default class UIBuilding extends UIObject {
         document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
     }
 
+    update() {
+        const node = document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
+        node.querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress}%`;
+    }
+
     render() {
         return `<div class="ui-bulding" data-game-object-id="${this._gameObject.id}">
             <span>${this._gameObject.constructor.name}</span>
+            <span class="build-progress">${this._gameObject.buildProgress}%</span>
         </div>`
     }
 }

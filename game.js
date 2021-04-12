@@ -24,15 +24,22 @@ export default class Game {
     }
 
     subscribeEvents() {
+        // resource-events
         document.addEventListener('onResourceCreated', this);
         document.addEventListener('onResourceStockChanged', this);
+        // unit-events
         document.addEventListener('onUnitCreated', this);
         document.addEventListener('onUnitMoved', this);
-        document.addEventListener('onBuildingCreated', this);
-        document.addEventListener('onMapSquareCreated', this);
         document.addEventListener('onUIUnitClicked', this);
-        document.addEventListener('onUIBuildingClicked', this);
         document.addEventListener('onUIMoveRequest', this);
+        // building-events
+        document.addEventListener('onBuildingCreated', this);
+        document.addEventListener('onBuildingProgressChanged', this);
+        document.addEventListener('onUIBuildingClicked', this);
+        document.addEventListener('onUIBuildingBuild', this);
+        // map-events
+        document.addEventListener('onMapSquareCreated', this);
+        document.addEventListener('onUISquareClick', this);
     }
 
     handleEvent(event) {
@@ -58,22 +65,8 @@ export default class Game {
         unit.move();
     }
 
-    onBuildingCreated(event) {
-        this._main.map.addBuilding(event.detail.gameObject);
-    }
-
-    onMapSquareCreated(event) {
-        this._main.map.add(event.detail.gameObject);
-    }
-
     onUIUnitClicked(event) {
         this._sidebar.selection.set(event.detail.gameObject);
-        this._sidebar.selection.update();
-    }
-
-    onUIBuildingClicked(event) {
-        this._sidebar.selection.set(event.detail.gameObject);
-        this._sidebar.selection.update();
     }
 
     onUIMoveRequest(event) {
@@ -82,6 +75,34 @@ export default class Game {
         if (gameObject && gameObject.moveable) {
             this._data.addMovement(gameObject, event.detail.gameObject);
         }
+    }
+
+    onBuildingCreated(event) {
+        this._main.map.addBuilding(event.detail.gameObject);
+    }
+
+    onBuildingProgressChanged(event) {
+        const building = this._main.map.findBuilding(event.detail.gameObject);
+        building.update();
+    }
+
+    onUIBuildingClicked(event) {
+        this._sidebar.selection.set(event.detail.gameObject);
+    }
+
+    onUIBuildingBuild(event) {
+        const building = this._data.addBuilding(event.detail.building, event.detail.gameObject);
+        if (building) {
+            this._sidebar.selection.set(building);
+        }
+    }
+
+    onMapSquareCreated(event) {
+        this._main.map.add(event.detail.gameObject);
+    }
+
+    onUISquareClick(event) {
+        this._sidebar.selection.set(event.detail.gameObject);
     }
 
     render() {

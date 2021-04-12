@@ -22,13 +22,13 @@ export default class GameData {
     }
 
     init() {
-        this._resources.push(new ResourceWood(200, 5));
-        this._resources.push(new ResourceFood(300, 10));
-        this._resources.push(new ResourceIron(0, 0));
+        this._resources.push(new ResourceWood(500));
+        this._resources.push(new ResourceFood(500));
+        this._resources.push(new ResourceIron(0));
 
         this._map = new GameMap(25, 25);
 
-        this._buildings.push(new Castle(this._map.square(6, 5)));
+        this._buildings.push(new Castle(this._map.square(6, 5), true));
 
         this._units.push(new UnitSoldier(this._map.square(5, 4)));
         this._units.push(new UnitSoldier(this._map.square(8, 1)));
@@ -42,10 +42,24 @@ export default class GameData {
         let runMovementInterval = this.runMovementInterval.bind(this);
 
         setInterval(runMovementInterval, 1000);
+
+        let runBuildInterval = this.runBuildInterval.bind(this);
+
+        setInterval(runBuildInterval, 1000);
     }
 
     runResourceInterval() {
-        this._resources.forEach(resource => resource.raiseStock());
+        this._resources.forEach(resource => {
+            let unitsPerInterval = 0;
+            this._buildings.filter(building => building.built() && building.constructor.raisesResources.has(resource.constructor.name)).forEach(building => {
+                unitsPerInterval += building.constructor.raisesResources.get(resource.constructor.name);
+            });
+
+            if (unitsPerInterval !== 0) {
+                resource.updateUnitsPerInterval(unitsPerInterval);
+                resource.raiseStock();
+            }
+        });
     }
 
     runMovementInterval() {
@@ -73,7 +87,46 @@ export default class GameData {
         });
     }
 
+    runBuildInterval() {
+        this._buildings.filter(building => !building.built()).forEach(building => {
+            building.raiseBuild();
+        });
+    }
+
     addMovement(gameObject, to) {
         this._movements.push([gameObject, to]);
+    }
+
+    addBuilding(buildingClass, to) {
+        const className = eval(buildingClass);
+
+        if (this.isBuildingAffordable(className)) {
+            const building = new className(to);
+
+            this._buildings.push(building);
+
+            for (let costs of building.constructor.costs) {
+                const resource = this._resources.find(resource => resource.constructor.name === costs[0]);
+                resource.lowerStock(costs[1]);
+            }
+
+            return building;
+        }
+
+        return;
+    }
+
+    isBuildingAffordable(className) {
+        let affordable = true;
+
+        for (let costs of className.costs) {
+            const resource = this._resources.find(resource => resource.constructor.name === costs[0]);
+            if (costs[1] > resource.stock) {
+                affordable = false;
+                break;
+            }
+        }
+
+        return affordable;
     }
 }

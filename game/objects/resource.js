@@ -6,7 +6,7 @@ export default class Resource extends GameObject {
     _stock = 0;
     _unitsPerInterval = 0;
 
-    constructor(stock, unitsPerInterval) {
+    constructor(stock = 0, unitsPerInterval = 0) {
         super();
 
         this._stock = stock;
@@ -23,8 +23,18 @@ export default class Resource extends GameObject {
         return this._unitsPerInterval;
     }
 
+    updateUnitsPerInterval(unitsPerInterval) { // TODO: find out why setter is not working
+        this._unitsPerInterval = unitsPerInterval;
+    }
+
     raiseStock() {
         this._stock += this._unitsPerInterval;
+
+        super.fireCustomEvent('onResourceStockChanged', { detail: { gameObject: this } });
+    }
+
+    lowerStock(amount) {
+        this._stock -= amount;
 
         super.fireCustomEvent('onResourceStockChanged', { detail: { gameObject: this } });
     }

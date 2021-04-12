@@ -16,7 +16,7 @@ export default class Unit extends GameObject {
         return this._position;
     }
 
-    updatePosition(position) {
+    updatePosition(position) { // TODO: find out why setter is not working
         this._position = position;
         super.fireCustomEvent('onUnitMoved', { detail: { gameObject: this } });
     }

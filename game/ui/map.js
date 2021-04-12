@@ -7,6 +7,7 @@ import UIBuilding from './building.js';
 export default class UIMap extends UIObject {
 
     _units = new Map();
+    _buildings = new Map();
 
     constructor() {
         super();
@@ -38,9 +39,15 @@ export default class UIMap extends UIObject {
     addBuilding(gameObject) {
         const building = new UIBuilding(gameObject);
 
+        this._buildings.set(gameObject.id, building);
+
         document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${gameObject.position.id}"]`).insertAdjacentHTML('beforeend', building.render());
 
         building.addListener();
+    }
+
+    findBuilding(gameObject) {
+        return this._buildings.get(gameObject.id);
     }
 
     render() {
