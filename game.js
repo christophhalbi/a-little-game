@@ -31,6 +31,8 @@ export default class Game {
         document.addEventListener('onUnitCreated', this);
         document.addEventListener('onUnitMoved', this);
         document.addEventListener('onUnitMoveDone', this);
+        document.addEventListener('onUnitProgressChanged', this);
+        document.addEventListener('onUIUnitBuild', this);
         document.addEventListener('onUIUnitClicked', this);
         document.addEventListener('onUIMoveRequest', this);
         document.addEventListener('onUIUnitRemove', this);
@@ -78,6 +80,17 @@ export default class Game {
             building.homeUnit(unit);
 
             this._sidebar.selection.update();
+        }
+    }
+
+    onUnitProgressChanged(event) {
+        this._sidebar.selection.update();
+    }
+
+    onUIUnitBuild(event) {
+        const unit = this._data.addUnit(event.detail.unit, event.detail.gameObject);
+        if (unit) {
+            this._sidebar.selection.set(unit);
         }
     }
 

@@ -9,8 +9,11 @@ export default class UISelection extends UIObject {
     }
 
     handleEvent(event) {
-        if (event.target.dataset.building) {
-            super.fireCustomEvent('onUIBuildingBuild', { detail: { gameObject: this._gameObject, building: event.target.dataset.building } });
+        if (event.target.dataset.createBuilding) {
+            super.fireCustomEvent('onUIBuildingBuild', { detail: { gameObject: this._gameObject, building: event.target.dataset.createBuilding } });
+        }
+        else if (event.target.dataset.createUnit) {
+            super.fireCustomEvent('onUIUnitBuild', { detail: { gameObject: this._gameObject, unit: event.target.dataset.createUnit } });
         }
         else if (event.target.dataset.level_up) {
             console.log("level up");
@@ -63,8 +66,8 @@ export default class UISelection extends UIObject {
         if (this._gameObject.constructor.name === 'GameMapSquare') {
             return `
                 <span>${this._gameObject.resourceInfo().join('<br/>')}</span><br/>
-                <span class="ui-action" data-building="Lumberjack">Build Lumberjack</span><br/>
-                <span class="ui-action" data-building="Farm">Build Farm</span>
+                <span class="ui-action" data-create-building="Lumberjack">Build Lumberjack</span><br/>
+                <span class="ui-action" data-create-building="Farm">Build Farm</span>
             `;
         }
         else {
@@ -76,8 +79,17 @@ export default class UISelection extends UIObject {
                     <span class="ui-action" data-level_up="1">Level up</span><br/>
                     <span class="ui-action" data-remove="1">Remove</span><br/>
                 `;
-                if (this._gameObject.canHoldUnits()) {
+
+                if (this._gameObject.canProduceUnits()) {
                     content += `<span>Units</span><br/>`;
+
+                    for (let className of this._gameObject.produceableUnits()) {
+                        content += `<span class="ui-action" data-create-unit="${className}">Create ${className}</span><br/>`;
+                    };
+                }
+
+                if (this._gameObject.canHoldUnits()) {
+                    content += `<span>Units inside</span><br/>`;
 
                     this._gameObject.units.forEach(unit => {
                         content += `<span class="ui-action" data-throw-out-unit="${unit.id}">${unit.constructor.name} Remove</span><br/>`;

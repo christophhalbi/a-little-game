@@ -40,6 +40,14 @@ export default class Building extends GameObject {
         return true;
     }
 
+    canProduceUnits() {
+        return this.constructor.producesUnits.size;
+    }
+
+    produceableUnits() {
+        return this.constructor.producesUnits.keys();
+    }
+
     built() {
         return this.buildProgress === 100;
     }
@@ -64,11 +72,11 @@ export default class Building extends GameObject {
     }
 
     produces(resourceObject) {
-        return this.constructor.produces.has(resourceObject.constructor.name);
+        return this.constructor.producesResource.has(resourceObject.constructor.name);
     }
 
     produce(resourceObject) {
-        return this.constructor.produces.get(resourceObject.constructor.name) * this._position.produceFactor(this);
+        return this.constructor.producesResource.get(resourceObject.constructor.name) * this._position.produceFactor(this);
     }
 
     displayClass() {

@@ -30,11 +30,11 @@ export default class GameData {
 
         this._buildings.push(new Castle(this._map.square(6, 5), true));
 
-        this._units.push(new Soldier(this._map.square(5, 4)));
-        this._units.push(new Soldier(this._map.square(8, 1)));
-        this._units.push(new Soldier(this._map.square(8, 2)));
-        this._units.push(new Worker(this._map.square(12, 5)));
-        this._units.push(new Worker(this._map.square(13, 5)));
+        this._units.push(new Soldier(this._map.square(5, 4), true));
+        this._units.push(new Soldier(this._map.square(8, 1), true));
+        this._units.push(new Soldier(this._map.square(8, 2), true));
+        this._units.push(new Worker(this._map.square(12, 5), true));
+        this._units.push(new Worker(this._map.square(13, 5), true));
 
         let runResourceInterval = this.runResourceInterval.bind(this);
 
@@ -91,6 +91,9 @@ export default class GameData {
         this._buildings.filter(building => !building.built() && building.working()).forEach(building => {
             building.raiseBuild();
         });
+        this._units.filter(unit => !unit.built()).forEach(unit => {
+            unit.raiseBuild();
+        });
     }
 
     addMovement(gameObject, to) {
@@ -98,25 +101,46 @@ export default class GameData {
     }
 
     addBuilding(buildingClass, to) {
-        const className = eval(buildingClass);
-
-        if (this.isBuildingAffordable(className)) {
-            const building = new className(to);
-
+        const building = this.add(buildingClass, to);
+        if (building) {
             this._buildings.push(building);
-
-            for (let costs of building.constructor.costs) {
-                const resource = this._resources.find(resource => resource.constructor.name === costs[0]);
-                resource.lowerStock(costs[1]);
-            }
 
             return building;
         }
 
         return;
+   }
+
+    addUnit(unitClass, originBuilding) {
+        const square = this._map.square(originBuilding.position.x + 1, originBuilding.position.y);
+        const unit = this.add(unitClass, square);
+        if (unit) {
+            this._units.push(unit);
+
+            return unit;
+        }
+
+        return;
     }
 
-    isBuildingAffordable(className) {
+    add(buildClass, to) {
+        const className = eval(buildClass);
+
+        if (this.isAffordable(className)) {
+            const object = new className(to);
+
+            for (let costs of object.constructor.costs) {
+                const resource = this._resources.find(resource => resource.constructor.name === costs[0]);
+                resource.lowerStock(costs[1]);
+            }
+
+            return object;
+        }
+
+        return;
+    }
+
+    isAffordable(className) {
         let affordable = true;
 
         for (let costs of className.costs) {

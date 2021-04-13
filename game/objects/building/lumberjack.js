@@ -10,9 +10,11 @@ export default class Lumberjack extends Building {
         ['Food', 300],
     ]);
 
-    static produces = new Map([
+    static producesResource = new Map([
         ['Wood', 5],
     ]);
+
+    static producesUnits = new Map();
 
     static workersNeeded = 1;
 

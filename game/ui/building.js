@@ -31,7 +31,7 @@ export default class UIBuilding extends UIObject {
     }
 
     update() {
-        //this.node().querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress.toFixed(2)}%`;
+        this.node().dataset.buildProgress = this._gameObject.buildProgress.toFixed(2);
     }
 
     remove() {
@@ -39,8 +39,7 @@ export default class UIBuilding extends UIObject {
     }
 
     render() {
-        return `<div class="ui-building ${this._gameObject.displayClass()}" data-game-object-id="${this._gameObject.id}">
-            <!--<span class="build-progress">${this._gameObject.buildProgress.toFixed(2)}%</span>-->
+        return `<div class="ui-building ${this._gameObject.displayClass()}" data-game-object-id="${this._gameObject.id}" data-build-progress="${this._gameObject.buildProgress.toFixed(2)}">
         </div>`
     }
 }

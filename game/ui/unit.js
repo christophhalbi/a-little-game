@@ -28,12 +28,16 @@ export default class UIUnit extends UIObject {
         document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(this.node());
     }
 
+    update() {
+        this.node().dataset.buildProgress = this._gameObject.buildProgress.toFixed(2);
+    }
+
     remove() {
         this.node().remove();
     }
 
     render() {
-        return `<div class="ui-unit ${this._gameObject.displayClass()}" data-game-object-id="${this._gameObject.id}">
+        return `<div class="ui-unit ${this._gameObject.displayClass()}" data-game-object-id="${this._gameObject.id}" data-build-progress="${this._gameObject.buildProgress.toFixed(2)}">
         </div>`
     }
 }

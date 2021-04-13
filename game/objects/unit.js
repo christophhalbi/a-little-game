@@ -3,19 +3,28 @@ import GameObject from './object.js';
 
 export default class Unit extends GameObject {
 
+    _buildTime = 0;
     _level = 1;
 
-    constructor(position) {
+    constructor(position, built = false) {
         super();
 
         this._position = position;
         this._moveable = true;
 
-        super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
+        if (built) {
+            this._buildTime = this.constructor.timeToBuild;
+
+            super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
+        }
     }
 
     get position() {
         return this._position;
+    }
+
+    get buildProgress() {
+        return (this._buildTime / this.constructor.timeToBuild) * 100;
     }
 
     get level() {
@@ -32,11 +41,21 @@ export default class Unit extends GameObject {
     }
 
     built() {
-        return true;
+        return this.buildProgress === 100;
     }
 
     isWorker() {
         return this.constructor.name === 'Worker';
+    }
+
+    raiseBuild() {
+        this._buildTime += 1000;
+
+        super.fireCustomEvent('onUnitProgressChanged', { detail: { gameObject: this } });
+
+        if (this.built()) {
+            super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
+        }
     }
 
     displayClass() {

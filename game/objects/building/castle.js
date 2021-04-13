@@ -10,7 +10,11 @@ export default class Castle extends Building {
         ['Iron', 2000],
     ]);
 
-    static produces = new Map();
+    static producesResource = new Map();
+
+    static producesUnits = new Map([
+        ['Worker', 1],
+    ]);
 
     static workersNeeded = 10;
 
