@@ -32,6 +32,14 @@ export default class Building extends GameObject {
         return this._level;
     }
 
+    get units() {
+        return this._units;
+    }
+
+    canHoldUnits() {
+        return true;
+    }
+
     built() {
         return this.buildProgress === 100;
     }
@@ -42,6 +50,11 @@ export default class Building extends GameObject {
 
     homeUnit(unit) {
         this._units.push(unit);
+    }
+
+    throwOutUnit(unit) {
+        const index = this._units.findIndex(unitItem => unitItem.id === unit.id);
+        this._units.splice(index, 1);
     }
 
     raiseBuild() {

@@ -40,6 +40,7 @@ export default class Game {
         document.addEventListener('onUIBuildingBuild', this);
         document.addEventListener('onUIBuildingClicked', this);
         document.addEventListener('onUIBuildingHomeUnit', this);
+        document.addEventListener('onUIBuildingThrowOutUnit', this);
         document.addEventListener('onUIBuildingRemove', this);
         // map-events
         document.addEventListener('onMapSquareCreated', this);
@@ -75,6 +76,8 @@ export default class Game {
 
         if (building) {
             building.homeUnit(unit);
+
+            this._sidebar.selection.update();
         }
     }
 
@@ -124,6 +127,14 @@ export default class Game {
 
     onUIBuildingHomeUnit(event) {
         this._data.homeUnit(event.detail.gameObject, event.detail.unit);
+    }
+
+    onUIBuildingThrowOutUnit(event) {
+        this._main.map.addUnit(event.detail.unit);
+
+        this._data.throwOutUnit(event.detail.gameObject, event.detail.unit);
+
+        this._sidebar.selection.update();
     }
 
     onUIBuildingRemove(event) {

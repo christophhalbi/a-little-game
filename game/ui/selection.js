@@ -18,6 +18,10 @@ export default class UISelection extends UIObject {
         else if (event.target.dataset.remove) {
             super.fireCustomEvent(`onUI${Object.getPrototypeOf(this._gameObject.constructor).name}Remove`, { detail: { gameObject: this._gameObject } });
         }
+        else if (event.target.dataset.throwOutUnit) {
+            const unit = this._gameObject.units.find(unit => unit.id === parseInt(event.target.dataset.throwOutUnit));
+            super.fireCustomEvent(`onUIBuildingThrowOutUnit`, { detail: { gameObject: this._gameObject, unit: unit } });
+        }
     }
 
     update() {
@@ -70,8 +74,15 @@ export default class UISelection extends UIObject {
                 content += `
                     <span class="level">Level ${this._gameObject.level}</span><br/>
                     <span class="ui-action" data-level_up="1">Level up</span><br/>
-                    <span class="ui-action" data-remove="1">Remove</span>
+                    <span class="ui-action" data-remove="1">Remove</span><br/>
                 `;
+                if (this._gameObject.canHoldUnits()) {
+                    content += `<span>Units</span><br/>`;
+
+                    this._gameObject.units.forEach(unit => {
+                        content += `<span class="ui-action" data-throw-out-unit="${unit.id}">${unit.constructor.name} Remove</span><br/>`;
+                    });
+                }
             }
             else {
                 content += `

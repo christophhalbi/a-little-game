@@ -17,6 +17,10 @@ export default class GameObject {
         return this._id;
     }
 
+    canHoldUnits() {
+        return false;
+    }
+
     fireCustomEvent(eventName, detail) {
         const event = new CustomEvent(eventName, detail);
         document.dispatchEvent(event);

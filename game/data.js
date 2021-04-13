@@ -139,6 +139,13 @@ export default class GameData {
         building.homeUnit(unit);
     }
 
+    throwOutUnit(building, unit) {
+        building.throwOutUnit(unit);
+
+        // TODO: make sure position is in map
+        unit.updatePosition(this._map.square(building.position.x + 1, building.position.y));
+    }
+
     removeUnit(gameObject) {
         const index = this._units.findIndex(unit => unit.id === gameObject.id);
         this._units.splice(index, 1);

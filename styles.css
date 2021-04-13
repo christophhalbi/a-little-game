@@ -105,3 +105,7 @@
     height: 60px;
     width: 60px;
 }
+
+#ui-selection .ui-action {
+    cursor: pointer;
+}
