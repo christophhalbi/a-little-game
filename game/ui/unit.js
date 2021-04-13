@@ -12,21 +12,24 @@ export default class UIUnit extends UIObject {
         return this._gameObject;
     }
 
+    node() {
+        return document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`);
+    }
+
     handleEvent(event) {
         super.fireCustomEvent('onUIUnitClicked', { detail: { gameObject: this._gameObject } });
     }
 
     addListener() {
-        document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
+        this.node().addEventListener('click', this);
     }
 
     move() {
-        document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`));
+        document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(this.node());
     }
 
     remove() {
-        const node = document.querySelector(`div.ui-unit[data-game-object-id="${this._gameObject.id}"]`);
-        node.remove();
+        this.node().remove();
     }
 
     render() {

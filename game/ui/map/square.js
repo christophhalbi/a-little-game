@@ -8,6 +8,10 @@ export default class UIMapSquare extends UIObject {
         this._gameObject = gameObject;
     }
 
+    node() {
+        return document.querySelector(`div.ui-map-square[data-game-object-id="${this._gameObject.id}"]`);
+    }
+
     handleEvent(event) {
         if (event.which === 1) {
             super.fireCustomEvent('onUISquareClick', { detail: { gameObject: this._gameObject } });
@@ -18,7 +22,7 @@ export default class UIMapSquare extends UIObject {
     }
 
     addListener() {
-        document.querySelector(`div.ui-map-square[data-game-object-id="${this._gameObject.id}"]`).addEventListener('mousedown', this);
+        this.node().addEventListener('mousedown', this);
     }
 
     render() {

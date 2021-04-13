@@ -14,6 +14,10 @@ export default class UIMap extends UIObject {
         this._id = 'ui-map';
     }
 
+    positionNode(position) {
+        return document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${position.id}"]`);
+    }
+
     add(gameObject) {
         const square = new UIMapSquare(gameObject);
 
@@ -27,7 +31,7 @@ export default class UIMap extends UIObject {
 
         this._units.set(gameObject.id, unit);
 
-        document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${gameObject.position.id}"]`).insertAdjacentHTML('beforeend', unit.render());
+        this.positionNode(gameObject.position).insertAdjacentHTML('beforeend', unit.render());
 
         unit.addListener();
     }
@@ -49,7 +53,7 @@ export default class UIMap extends UIObject {
 
         this._buildings.set(gameObject.id, building);
 
-        document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${gameObject.position.id}"]`).insertAdjacentHTML('beforeend', building.render());
+        this.positionNode(gameObject.position).insertAdjacentHTML('beforeend', building.render());
 
         building.addListener();
     }

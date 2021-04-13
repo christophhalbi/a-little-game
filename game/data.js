@@ -2,8 +2,8 @@
 import ResourceWood from './objects/resource/wood.js';
 import ResourceFood from './objects/resource/food.js';
 import ResourceIron from './objects/resource/iron.js';
-import UnitSoldier from './objects/unit/soldier.js';
-import UnitWorker from './objects/unit/worker.js';
+import Soldier from './objects/unit/soldier.js';
+import Worker from './objects/unit/worker.js';
 import Castle from './objects/building/castle.js';
 import Lumberjack from './objects/building/lumberjack.js';
 import Farm from './objects/building/farm.js';
@@ -30,11 +30,11 @@ export default class GameData {
 
         this._buildings.push(new Castle(this._map.square(6, 5), true));
 
-        this._units.push(new UnitSoldier(this._map.square(5, 4)));
-        this._units.push(new UnitSoldier(this._map.square(8, 1)));
-        this._units.push(new UnitSoldier(this._map.square(8, 2)));
-        this._units.push(new UnitWorker(this._map.square(12, 5)));
-        this._units.push(new UnitWorker(this._map.square(13, 5)));
+        this._units.push(new Soldier(this._map.square(5, 4)));
+        this._units.push(new Soldier(this._map.square(8, 1)));
+        this._units.push(new Soldier(this._map.square(8, 2)));
+        this._units.push(new Worker(this._map.square(12, 5)));
+        this._units.push(new Worker(this._map.square(13, 5)));
 
         let runResourceInterval = this.runResourceInterval.bind(this);
 

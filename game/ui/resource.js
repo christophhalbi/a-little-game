@@ -12,8 +12,12 @@ export default class UIResource extends UIObject {
         return this._gameObject;
     }
 
+    node() {
+        return document.querySelector(`div.ui-resource[data-game-object-id="${this._gameObject.id}"]`);
+    }
+
     update() {
-        const node = document.querySelector(`div.ui-resource[data-game-object-id="${this._gameObject.id}"]`);
+        const node = this.node();
         node.querySelector('span.stock').innerHTML = this._gameObject.stock.toFixed(2);
         node.querySelector('span.units-per-interval').innerHTML = `+${this._gameObject.unitsPerInterval.toFixed(2)}`;
     }

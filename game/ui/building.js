@@ -12,6 +12,10 @@ export default class UIBuilding extends UIObject {
         return this._gameObject;
     }
 
+    node() {
+        return document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
+    }
+
     homeUnit(unit) {
         unit.remove();
 
@@ -23,17 +27,15 @@ export default class UIBuilding extends UIObject {
     }
 
     addListener() {
-        document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`).addEventListener('click', this);
+        this.node().addEventListener('click', this);
     }
 
     update() {
-        const node = document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
-        node.querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress.toFixed(2)}%`;
+        this.node().querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress.toFixed(2)}%`;
     }
 
     remove() {
-        const node = document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
-        node.remove();
+        this.node().remove();
     }
 
     render() {
