@@ -26,7 +26,7 @@ export default class GameData {
         this._resources.push(new ResourceFood(500));
         this._resources.push(new ResourceIron(0));
 
-        this._map = new GameMap(25, 25);
+        this._map = new GameMap(20, 20);
 
         this._buildings.push(new Castle(this._map.square(6, 5), true));
 

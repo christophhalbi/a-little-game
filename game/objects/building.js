@@ -57,4 +57,9 @@ export default class Building extends GameObject {
     produce(resourceObject) {
         return this.constructor.produces.get(resourceObject.constructor.name) * this._position.produceFactor(this);
     }
+
+    displayClass() {
+        let className = this.constructor.name;
+        return className.toLowerCase();
+    }
 }

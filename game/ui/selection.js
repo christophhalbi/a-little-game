@@ -64,7 +64,7 @@ export default class UISelection extends UIObject {
             `;
         }
         else {
-            let content = `<span>${this._gameObject.constructor.name}<br/>`;
+            let content = `<span>${this._gameObject.constructor.name}</span><br/><div class="object ${this._gameObject.displayClass()}"></div>`;
 
             if (this._gameObject.built()) {
                 content += `

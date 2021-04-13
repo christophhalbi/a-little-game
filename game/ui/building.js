@@ -13,7 +13,7 @@ export default class UIBuilding extends UIObject {
     }
 
     node() {
-        return document.querySelector(`div.ui-bulding[data-game-object-id="${this._gameObject.id}"]`);
+        return document.querySelector(`*[data-game-object-id="${this._gameObject.id}"]`);
     }
 
     homeUnit(unit) {
@@ -31,7 +31,7 @@ export default class UIBuilding extends UIObject {
     }
 
     update() {
-        this.node().querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress.toFixed(2)}%`;
+        //this.node().querySelector('span.build-progress').innerHTML = `${this._gameObject.buildProgress.toFixed(2)}%`;
     }
 
     remove() {
@@ -39,9 +39,8 @@ export default class UIBuilding extends UIObject {
     }
 
     render() {
-        return `<div class="ui-bulding" data-game-object-id="${this._gameObject.id}">
-            <span>${this._gameObject.constructor.name}</span>
-            <span class="build-progress">${this._gameObject.buildProgress.toFixed(2)}%</span>
+        return `<div class="ui-building ${this._gameObject.displayClass()}" data-game-object-id="${this._gameObject.id}">
+            <!--<span class="build-progress">${this._gameObject.buildProgress.toFixed(2)}%</span>-->
         </div>`
     }
 }

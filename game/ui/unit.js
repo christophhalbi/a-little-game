@@ -33,8 +33,7 @@ export default class UIUnit extends UIObject {
     }
 
     render() {
-        return `<div class="ui-unit" data-game-object-id="${this._gameObject.id}">
-            <span>${this._gameObject.constructor.name}</span>
+        return `<div class="ui-unit ${this._gameObject.displayClass()}" data-game-object-id="${this._gameObject.id}">
         </div>`
     }
 }

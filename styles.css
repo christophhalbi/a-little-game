@@ -9,14 +9,14 @@
     width: 800px;
     height: 800px;
     display: grid;
-    grid-template-columns: repeat(25, 1fr);
+    grid-template-columns: repeat(20, 1fr);
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
 }
 
 .ui-map-square {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
 }
@@ -39,4 +39,69 @@
 
 #ui-resources .units-per-interval {
     font-size: smaller;
+}
+
+.ui-building.castle {
+    background-image: url('src/castle.png');
+    background-size: cover;
+    height: 40px;
+}
+
+.ui-building.farm {
+    background-image: url('src/farm.png');
+    background-size: cover;
+    height: 40px;
+}
+
+.ui-building.lumberjack {
+    background-image: url('src/lumberjack.png');
+    background-size: cover;
+    height: 40px;
+}
+
+.ui-unit.worker {
+    background-image: url('src/worker.png');
+    background-size: cover;
+    height: 40px;
+}
+
+.ui-unit.soldier {
+    background-image: url('src/soldier.png');
+    background-size: cover;
+    height: 40px;
+}
+
+#ui-selection .object.castle {
+    background-image: url('src/castle.png');
+    background-size: cover;
+    height: 60px;
+    width: 60px;
+}
+
+#ui-selection .object.farm {
+    background-image: url('src/farm.png');
+    background-size: cover;
+    height: 60px;
+    width: 60px;
+}
+
+#ui-selection .object.lumberjack {
+    background-image: url('src/lumberjack.png');
+    background-size: cover;
+    height: 60px;
+    width: 60px;
+}
+
+#ui-selection .object.worker {
+    background-image: url('src/worker.png');
+    background-size: cover;
+    height: 60px;
+    width: 60px;
+}
+
+#ui-selection .object.soldier {
+    background-image: url('src/soldier.png');
+    background-size: cover;
+    height: 60px;
+    width: 60px;
 }

@@ -38,4 +38,9 @@ export default class Unit extends GameObject {
     isWorker() {
         return this.constructor.name === 'Worker';
     }
+
+    displayClass() {
+        let className = this.constructor.name;
+        return className.toLowerCase();
+    }
 }
