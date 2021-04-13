@@ -58,17 +58,28 @@ export default class UISelection extends UIObject {
         this.update();
     }
 
+    buildCostInfo(className) {
+        let costInfo = [];
+        className.costs.forEach((value, key) => {
+            costInfo.push(`${key}: ${value}`);
+        });
+
+        return costInfo.join(', ');
+    }
+
     renderDetails() {
         if (this._gameObject === null) {
             return '';
         }
 
         if (this._gameObject.constructor.name === 'GameMapSquare') {
-            return `
-                <span>${this._gameObject.resourceInfo().join('<br/>')}</span><br/>
-                <span class="ui-action" data-create-building="Lumberjack">Build Lumberjack</span><br/>
-                <span class="ui-action" data-create-building="Farm">Build Farm</span>
-            `;
+            let content = `<span>${this._gameObject.resourceInfo().join('<br/>')}</span><br/>`;
+
+            for (let className of this._gameObject.produceableBuildings()) {
+                content += `<span class="ui-action" data-create-building="${className.name}" title="${this.buildCostInfo(className)}">Create ${className.name}</span><br/>`;
+            };
+
+            return content;
         }
         else {
             let content = `<span>${this._gameObject.constructor.name}</span><br/><div class="object ${this._gameObject.displayClass()}"></div>`;
@@ -84,7 +95,7 @@ export default class UISelection extends UIObject {
                     content += `<span>Units</span><br/>`;
 
                     for (let className of this._gameObject.produceableUnits()) {
-                        content += `<span class="ui-action" data-create-unit="${className}">Create ${className}</span><br/>`;
+                        content += `<span class="ui-action" data-create-unit="${className.name}" title="${this.buildCostInfo(className)}">Create ${className.name}</span><br/>`;
                     };
                 }
 

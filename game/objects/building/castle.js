@@ -1,5 +1,6 @@
 
 import Building from '../building.js';
+import Worker from "../unit/worker.js";
 
 export default class Castle extends Building {
 
@@ -13,7 +14,7 @@ export default class Castle extends Building {
     static producesResource = new Map();
 
     static producesUnits = new Map([
-        ['Worker', 1],
+        [Worker, true],
     ]);
 
     static workersNeeded = 10;

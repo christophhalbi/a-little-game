@@ -1,5 +1,7 @@
 
 import GameObject from "../object.js";
+import Lumberjack from "../building/lumberjack.js";
+import Farm from "../building/farm.js";
 
 export default class GameMapSquare extends GameObject {
 
@@ -49,5 +51,9 @@ export default class GameMapSquare extends GameObject {
             : className === 'Farm'
                 ? this._factorFarmland
                 : 0;
+    }
+
+    produceableBuildings() {
+        return [Lumberjack, Farm];
     }
 }
