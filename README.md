@@ -1,5 +1,7 @@
 # A little game
 
+![title](src/game.png)
+
 ## Deployment
 
     python -m SimpleHTTPServer
