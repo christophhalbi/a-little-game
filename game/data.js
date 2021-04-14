@@ -37,8 +37,6 @@ export default class GameData {
     load(storedData) {
         const json = JSON.parse(storedData);
 
-        // TODO: get rid of _-access
-
         json.resources.forEach(resource => {
             const className = eval(resource._class);
 
