@@ -6,8 +6,8 @@ export default class GameMap extends GameObject {
 
     _data = [];
 
-    constructor(rows, columns) {
-        super();
+    constructor(rows = 0, columns = 0, id) {
+        super(id);
 
         for (let x = 0; x < rows; x++) {
             this._data[x] = [];
@@ -16,8 +16,20 @@ export default class GameMap extends GameObject {
                 this._data[x][y] = new GameMapSquare(x, y);
             }
         }
+    }
 
-        super.fireCustomEvent('onMapCreated', { detail: { gameObject: this } });
+    static createFromJSON(json) {
+        let object = new GameMap(0, 0, json._id);
+
+        for (let x = 0; x < json._data.length; x++) {
+            object._data[x] = [];
+
+            for (let y = 0; y < json._data[x].length; y++) {
+                object._data[x][y] = GameMapSquare.createFromJSON(json._data[x][y]);
+            }
+        }
+
+        return object;
     }
 
     square(x, y) {

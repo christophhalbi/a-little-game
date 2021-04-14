@@ -5,8 +5,12 @@ export default class GameObject {
 
     _moveable = false;
 
-    constructor() {
-        this._id = GameObject.objectCounter++;
+    constructor(id) {
+        if (id === undefined) {
+            id = GameObject.objectCounter++;
+        }
+
+        this._id = id;
     }
 
     get moveable() {

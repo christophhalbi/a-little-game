@@ -18,7 +18,11 @@ export default class Lumberjack extends Building {
 
     static workersNeeded = 1;
 
-    constructor(position, built) {
-        super(position, built);
+    constructor(position, buildTime, units, id) {
+        super(position, buildTime, units, id);
+    }
+
+    static createFromJSON(json) {
+        return new Lumberjack(json._position, json._buildTime, json._units, json._id);
     }
 }

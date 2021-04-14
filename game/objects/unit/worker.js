@@ -9,7 +9,11 @@ export default class Worker extends Unit {
         ['Food', 50],
     ]);
 
-    constructor(position, built) {
-        super(position, built);
+    constructor(position, buildTime, id) {
+        super(position, buildTime, id);
+    }
+
+    static createFromJSON(json) {
+        return new Worker(json._position, json._buildTime, json._id);
     }
 }

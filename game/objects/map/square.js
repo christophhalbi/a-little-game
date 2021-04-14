@@ -8,16 +8,24 @@ export default class GameMapSquare extends GameObject {
     _factorWood;
     _factorFarmland;
 
-    constructor(x, y) {
-        super();
+    constructor(x, y, factorWood, factorFarmland, id) {
+        super(id);
 
         this._x = x;
         this._y = y;
 
-        this._factorWood = (0.2 + Math.random()).toFixed(2);
-        this._factorFarmland = Math.random().toFixed(2);
+        this._factorWood = factorWood
+            ? factorWood
+            : (0.2 + Math.random()).toFixed(2);
+        this._factorFarmland = factorFarmland
+            ? factorFarmland
+            : Math.random().toFixed(2);
 
         super.fireCustomEvent('onMapSquareCreated', { detail: { gameObject: this } });
+    }
+
+    static createFromJSON(json) {
+        return new GameMapSquare(json._x, json._y, json._factorWood, json._factorFarmland, json._id);
     }
 
     get x() {

@@ -6,15 +6,16 @@ export default class Unit extends GameObject {
     _buildTime = 0;
     _level = 1;
 
-    constructor(position, built = false) {
-        super();
+    constructor(position, buildTime = 0, id) {
+        super(id);
 
         this._position = position;
+        this._buildTime = buildTime;
         this._moveable = true;
 
-        if (built) {
-            this._buildTime = this.constructor.timeToBuild;
+        this._class = this.constructor.name;
 
+        if (this.built()) {
             super.fireCustomEvent('onUnitCreated', { detail: { gameObject: this } });
         }
     }

@@ -10,7 +10,11 @@ export default class Soldier extends Unit {
         ['Iron', 50],
     ]);
 
-    constructor(position, built) {
-        super(position, built);
+    constructor(position, buildTime, id) {
+        super(position, buildTime, id);
+    }
+
+    static createFromJSON(json) {
+        return new Soldier(json._position, json._buildTime, json._id);
     }
 }

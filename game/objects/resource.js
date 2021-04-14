@@ -6,11 +6,13 @@ export default class Resource extends GameObject {
     _stock = 0;
     _unitsPerInterval = 0;
 
-    constructor(stock = 0, unitsPerInterval = 0) {
-        super();
+    constructor(stock = 0, unitsPerInterval = 0, id) {
+        super(id);
 
         this._stock = stock;
         this._unitsPerInterval = unitsPerInterval;
+
+        this._class = this.constructor.name;
 
         super.fireCustomEvent('onResourceCreated', { detail: { gameObject: this } });
     }

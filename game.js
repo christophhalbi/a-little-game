@@ -17,13 +17,17 @@ export default class Game {
         this._targetNode.insertAdjacentHTML('beforeend', this.render());
 
         this.subscribeEvents();
+        this.onInit();
     }
 
     start() {
-        this._data.init();
+        this._data.setup();
     }
 
     subscribeEvents() {
+        // general
+        document.addEventListener('onUISave', this);
+        document.addEventListener('onUIReset', this);
         // resource-events
         document.addEventListener('onResourceCreated', this);
         document.addEventListener('onResourceStockChanged', this);
@@ -51,6 +55,20 @@ export default class Game {
 
     handleEvent(event) {
         this[event.type](event);
+    }
+
+    onUISave() {
+        this._data.store();
+    }
+
+    onUIReset() {
+        this._data.reset();
+
+        window.location.reload();
+    }
+
+    onInit() {
+        this._sidebar.options.addListener();
     }
 
     onResourceCreated(event) {

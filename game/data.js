@@ -1,13 +1,14 @@
 
-import ResourceWood from './objects/resource/wood.js';
-import ResourceFood from './objects/resource/food.js';
-import ResourceIron from './objects/resource/iron.js';
+import Wood from './objects/resource/wood.js';
+import Food from './objects/resource/food.js';
+import Iron from './objects/resource/iron.js';
 import Soldier from './objects/unit/soldier.js';
 import Worker from './objects/unit/worker.js';
 import Castle from './objects/building/castle.js';
 import Lumberjack from './objects/building/lumberjack.js';
 import Farm from './objects/building/farm.js';
 import GameMap from './objects/map.js';
+import GameObject from './objects/object.js';
 
 export default class GameData {
 
@@ -17,25 +18,97 @@ export default class GameData {
 
     _movements = [];
 
-    constructor() {
+    getStoredData() {
+        return localStorage.getItem('a-little-game');
+    }
 
+    setup() {
+        let storedData = this.getStoredData();
+        if (storedData) {
+            this.load(storedData);
+        }
+        else {
+            this.init();
+        }
+
+        this.initIntervals();
+    }
+
+    load(storedData) {
+        const json = JSON.parse(storedData);
+
+        // TODO: get rid of _-access
+
+        json.resources.forEach(resource => {
+            const className = eval(resource._class);
+
+            this._resources.push(className.createFromJSON(resource));
+        });
+
+        this._map = GameMap.createFromJSON(json.map);
+
+        json.buildings.forEach(building => {
+            const className = eval(building._class);
+
+            building._position = this._map.square(building._position._x, building._position._y);
+
+            this._buildings.push(className.createFromJSON(building));
+        });
+
+        json.units.forEach(unit => {
+            const className = eval(unit._class);
+
+            unit._position = this._map.square(unit._position._x, unit._position._y);
+
+            this._units.push(className.createFromJSON(unit));
+        });
+
+        this._buildings.forEach(building => {
+            if (building._units.length) {
+                let units = [];
+                building._units.forEach(unitData => {
+                    const unitObject = this._units.find(unit => unit._id === unitData._id); // TODO throw error
+
+                    units.push(unitObject);
+                });
+                building._units = units;
+            }
+        });
+
+        GameObject.objectCounter = parseInt(json.objectCounter);
+    }
+
+    store() {
+        localStorage.setItem('a-little-game', JSON.stringify({
+            map: this._map,
+            resources: this._resources,
+            buildings: this._buildings,
+            units: this._units,
+            objectCounter: GameObject.objectCounter,
+        }));
+    }
+
+    reset() {
+        localStorage.removeItem('a-little-game');
     }
 
     init() {
-        this._resources.push(new ResourceWood(500));
-        this._resources.push(new ResourceFood(500));
-        this._resources.push(new ResourceIron(0));
+        this._resources.push(new Wood(500));
+        this._resources.push(new Food(500));
+        this._resources.push(new Iron(0));
 
         this._map = new GameMap(20, 20);
 
-        this._buildings.push(new Castle(this._map.square(6, 5), true));
+        this._buildings.push(new Castle(this._map.square(6, 5), Castle.timeToBuild));
 
-        this._units.push(new Soldier(this._map.square(5, 4), true));
-        this._units.push(new Soldier(this._map.square(8, 1), true));
-        this._units.push(new Soldier(this._map.square(8, 2), true));
-        this._units.push(new Worker(this._map.square(12, 5), true));
-        this._units.push(new Worker(this._map.square(13, 5), true));
+        this._units.push(new Soldier(this._map.square(5, 4), Soldier.timeToBuild));
+        this._units.push(new Soldier(this._map.square(8, 1), Soldier.timeToBuild));
+        this._units.push(new Soldier(this._map.square(8, 2), Soldier.timeToBuild));
+        this._units.push(new Worker(this._map.square(12, 5), Soldier.timeToBuild));
+        this._units.push(new Worker(this._map.square(13, 5), Soldier.timeToBuild));
+    }
 
+    initIntervals() {
         let runResourceInterval = this.runResourceInterval.bind(this);
 
         setInterval(runResourceInterval, 5000);
@@ -47,6 +120,10 @@ export default class GameData {
         let runBuildInterval = this.runBuildInterval.bind(this);
 
         setInterval(runBuildInterval, 1000);
+
+        let runSaveInterval = this.runSaveInterval.bind(this);
+
+        //setInterval(runSaveInterval, 10000);
     }
 
     runResourceInterval() {
@@ -94,6 +171,10 @@ export default class GameData {
         this._units.filter(unit => !unit.built()).forEach(unit => {
             unit.raiseBuild();
         });
+    }
+
+    runSaveInterval() {
+        this.store();
     }
 
     addMovement(gameObject, to) {

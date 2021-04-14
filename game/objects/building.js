@@ -8,14 +8,14 @@ export default class Building extends GameObject {
 
     _units = [];
 
-    constructor(position, built = false) {
-        super();
+    constructor(position, buildTime = 0, units = [], id) {
+        super(id);
 
         this._position = position;
+        this._buildTime = buildTime;
+        this._units = units;
 
-        if (built) {
-            this._buildTime = this.constructor.timeToBuild;
-        }
+        this._class = this.constructor.name;
 
         super.fireCustomEvent('onBuildingCreated', { detail: { gameObject: this } });
     }

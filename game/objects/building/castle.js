@@ -19,7 +19,11 @@ export default class Castle extends Building {
 
     static workersNeeded = 10;
 
-    constructor(position, built) {
-        super(position, built);
+    constructor(position, buildTime, units, id) {
+        super(position, buildTime, units, id);
+    }
+
+    static createFromJSON(json) {
+        return new Castle(json._position, json._buildTime, json._units, json._id);
     }
 }
