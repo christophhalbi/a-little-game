@@ -49,10 +49,6 @@ export default class Unit extends GameObject {
         return this.buildProgress === 100;
     }
 
-    isWorker() {
-        return this.constructor.name === 'Worker';
-    }
-
     raiseBuild() {
         this._buildTime += 1000;
 

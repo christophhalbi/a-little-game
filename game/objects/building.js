@@ -1,5 +1,6 @@
 
 import GameObject from './object.js';
+import Worker from './unit/worker.js';
 
 export default class Building extends GameObject {
 
@@ -56,8 +57,14 @@ export default class Building extends GameObject {
         return this.buildProgress === 100;
     }
 
+    raiseBuild() {
+        this._buildTime += 1000;
+
+        super.fireCustomEvent('onBuildingProgressChanged', { detail: { gameObject: this } });
+    }
+
     working() {
-        return this._units.filter(unit => unit.isWorker()).length >= this.constructor.workersNeeded;
+        return this._units.filter(unit => unit instanceof Worker).length >= this.constructor.workersNeeded;
     }
 
     homeUnit(unit) {
@@ -67,12 +74,6 @@ export default class Building extends GameObject {
     throwOutUnit(unit) {
         const index = this._units.findIndex(unitItem => unitItem.id === unit.id);
         this._units.splice(index, 1);
-    }
-
-    raiseBuild() {
-        this._buildTime += 1000;
-
-        super.fireCustomEvent('onBuildingProgressChanged', { detail: { gameObject: this } });
     }
 
     produces(resourceObject) {
