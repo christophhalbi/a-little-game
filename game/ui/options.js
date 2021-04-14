@@ -24,6 +24,7 @@ export default class UIOptions extends UIObject {
             node.addEventListener('click', this);
         }
     }
+
     render() {
         return `<div id="${this._id}">
             <span>Options</span>

@@ -103,6 +103,7 @@ export default class Game {
 
     onUnitProgressChanged(event) {
         this._sidebar.selection.update();
+        this._sidebar.buildqueue.update(event.detail.gameObject);
     }
 
     onUIUnitBuild(event) {
@@ -143,6 +144,7 @@ export default class Game {
         building.update();
 
         this._sidebar.selection.update();
+        this._sidebar.buildqueue.update(event.detail.gameObject);
     }
 
     onUIBuildingBuild(event) {
