@@ -33,6 +33,10 @@ export default class GameMap extends GameObject {
     }
 
     square(x, y) {
-        return this._data[x][y];
+        const object = this._data[x][y];
+        if (!object) {
+            throw new RangeError(`GameMap: nothing found for x ${x} and y ${y}`);
+        }
+        return object;
     }
 }

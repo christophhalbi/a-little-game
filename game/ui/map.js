@@ -18,7 +18,7 @@ export default class UIMap extends UIObject {
         return document.querySelector(`#${this._id} div.ui-map-square[data-game-object-id="${position.id}"]`);
     }
 
-    add(gameObject) {
+    addSquare(gameObject) {
         const square = new UIMapSquare(gameObject);
 
         document.querySelector(`#${this._id}`).insertAdjacentHTML('beforeend', square.render());

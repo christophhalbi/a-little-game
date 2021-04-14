@@ -24,7 +24,7 @@ export default class UIUnit extends UIObject {
         this.node().addEventListener('click', this);
     }
 
-    move() {
+    moveToPosition() {
         document.querySelector(`div[data-game-object-id="${this._gameObject.position.id}"]`).appendChild(this.node());
     }
 

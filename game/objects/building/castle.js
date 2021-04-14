@@ -1,5 +1,7 @@
 
 import Building from '../building.js';
+import Iron from '../resource/iron.js';
+import Wood from '../resource/wood.js';
 import Worker from "../unit/worker.js";
 
 export default class Castle extends Building {
@@ -7,8 +9,8 @@ export default class Castle extends Building {
     static timeToBuild = 60000;
 
     static costs = new Map([
-        ['Wood', 2000],
-        ['Iron', 2000],
+        [Wood, 2000],
+        [Iron, 2000],
     ]);
 
     static producesResource = new Map();

@@ -67,7 +67,11 @@ export default class GameData {
             if (building._units.length) {
                 let units = [];
                 building._units.forEach(unitData => {
-                    const unitObject = this._units.find(unit => unit._id === unitData._id); // TODO throw error
+                    const unitObject = this._units.find(unit => unit._id === unitData._id);
+
+                    if (!unitObject) {
+                        throw new InternalError('GameData: unit not found');
+                    }
 
                     units.push(unitObject);
                 });
@@ -161,6 +165,9 @@ export default class GameData {
             else if (currentY > toY) {
                 item[0].updatePosition(this._map.square(currentX, currentY -1 ));
             }
+            else {
+                throw new InternalError('GameData: something went wrong');
+            }
         });
     }
 
@@ -211,7 +218,7 @@ export default class GameData {
             const object = new className(to);
 
             for (let costs of object.constructor.costs) {
-                const resource = this._resources.find(resource => resource.constructor.name === costs[0]);
+                const resource = this._resources.find(resource => resource instanceof costs[0]);
                 resource.lowerStock(costs[1]);
             }
 
@@ -225,7 +232,7 @@ export default class GameData {
         let affordable = true;
 
         for (let costs of className.costs) {
-            const resource = this._resources.find(resource => resource.constructor.name === costs[0]);
+            const resource = this._resources.find(resource => resource instanceof costs[0]);
             if (costs[1] > resource.stock) {
                 affordable = false;
                 break;

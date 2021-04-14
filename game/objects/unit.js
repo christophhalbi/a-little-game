@@ -7,6 +7,10 @@ export default class Unit extends GameObject {
     _level = 1;
 
     constructor(position, buildTime = 0, id) {
+        if (!position) {
+            throw new TypeError('Building: position not defined');
+        }
+
         super(id);
 
         this._position = position;

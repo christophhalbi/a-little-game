@@ -1,17 +1,19 @@
 
 import Building from '../building.js';
+import Food from '../resource/food.js';
+import Wood from '../resource/wood.js';
 
 export default class Lumberjack extends Building {
 
     static timeToBuild = 20000;
 
     static costs = new Map([
-        ['Wood', 100],
-        ['Food', 300],
+        [Wood, 100],
+        [Food, 300],
     ]);
 
     static producesResource = new Map([
-        ['Wood', 5],
+        [Wood, 5],
     ]);
 
     static producesUnits = new Map();

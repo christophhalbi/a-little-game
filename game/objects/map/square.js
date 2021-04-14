@@ -9,6 +9,13 @@ export default class GameMapSquare extends GameObject {
     _factorFarmland;
 
     constructor(x, y, factorWood, factorFarmland, id) {
+        if (x === undefined) {
+            throw new TypeError('GameMapSquare: x not defined');
+        }
+        if (y === undefined) {
+            throw new TypeError('GameMapSquare: y not defined');
+        }
+
         super(id);
 
         this._x = x;
@@ -53,10 +60,9 @@ export default class GameMapSquare extends GameObject {
     }
 
     produceFactor(buildingObject) {
-        const className = buildingObject.constructor.name;
-        return className === 'Lumberjack'
+        return buildingObject instanceof Lumberjack
             ? this._factorWood
-            : className === 'Farm'
+            : buildingObject instanceof Farm
                 ? this._factorFarmland
                 : 0;
     }

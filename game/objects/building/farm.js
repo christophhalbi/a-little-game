@@ -1,17 +1,19 @@
 
 import Building from '../building.js';
+import Food from '../resource/food.js';
+import Wood from '../resource/wood.js';
 
 export default class Farm extends Building {
 
     static timeToBuild = 15000;
 
     static costs = new Map([
-        ['Wood', 200],
-        ['Food', 100],
+        [Wood, 200],
+        [Food, 100],
     ]);
 
     static producesResource = new Map([
-        ['Food', 5],
+        [Food, 5],
     ]);
 
     static producesUnits = new Map();

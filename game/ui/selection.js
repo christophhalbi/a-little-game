@@ -1,4 +1,5 @@
 
+import GameMapSquare from '../objects/map/square.js';
 import UIObject from './object.js';
 
 export default class UISelection extends UIObject {
@@ -61,7 +62,7 @@ export default class UISelection extends UIObject {
     buildCostInfo(className) {
         let costInfo = [];
         className.costs.forEach((value, key) => {
-            costInfo.push(`${key}: ${value}`);
+            costInfo.push(`${key.name}: ${value}`);
         });
 
         return costInfo.join(', ');
@@ -72,7 +73,7 @@ export default class UISelection extends UIObject {
             return '';
         }
 
-        if (this._gameObject.constructor.name === 'GameMapSquare') {
+        if (this._gameObject instanceof GameMapSquare) {
             let content = `<span>${this._gameObject.resourceInfo().join('<br/>')}</span><br/>`;
 
             for (let className of this._gameObject.produceableBuildings()) {

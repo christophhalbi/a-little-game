@@ -87,7 +87,7 @@ export default class Game {
 
     onUnitMoved(event) {
         const unit = this._main.map.findUnit(event.detail.gameObject);
-        unit.move();
+        unit.moveToPosition();
     }
 
     onUnitMoveDone(event) {
@@ -177,7 +177,7 @@ export default class Game {
     }
 
     onMapSquareCreated(event) {
-        this._main.map.add(event.detail.gameObject);
+        this._main.map.addSquare(event.detail.gameObject);
     }
 
     onUISquareClick(event) {

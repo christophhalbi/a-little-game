@@ -9,6 +9,10 @@ export default class Building extends GameObject {
     _units = [];
 
     constructor(position, buildTime = 0, units = [], id) {
+        if (!position) {
+            throw new TypeError('Building: position not defined');
+        }
+
         super(id);
 
         this._position = position;
@@ -72,11 +76,11 @@ export default class Building extends GameObject {
     }
 
     produces(resourceObject) {
-        return this.constructor.producesResource.has(resourceObject.constructor.name);
+        return this.constructor.producesResource.has(resourceObject.constructor);
     }
 
     produce(resourceObject) {
-        return this.constructor.producesResource.get(resourceObject.constructor.name) * this._position.produceFactor(this);
+        return this.constructor.producesResource.get(resourceObject.constructor) * this._position.produceFactor(this);
     }
 
     displayClass() {
