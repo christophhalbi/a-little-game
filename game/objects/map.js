@@ -9,11 +9,11 @@ export default class GameMap extends GameObject {
     constructor(rows = 0, columns = 0, id) {
         super(id);
 
-        for (let x = 0; x < rows; x++) {
-            this._data[x] = [];
+        for (let y = 0; y < rows; y++) {
+            this._data[y] = [];
 
-            for (let y = 0; y < columns; y++) {
-                this._data[x][y] = new GameMapSquare(x, y);
+            for (let x = 0; x < columns; x++) {
+                this._data[y][x] = new GameMapSquare(x, y);
             }
         }
     }
@@ -21,11 +21,11 @@ export default class GameMap extends GameObject {
     static createFromJSON(json) {
         let object = new GameMap(0, 0, json._id);
 
-        for (let x = 0; x < json._data.length; x++) {
-            object._data[x] = [];
+        for (let y = 0; y < json._data.length; y++) {
+            object._data[y] = [];
 
-            for (let y = 0; y < json._data[x].length; y++) {
-                object._data[x][y] = GameMapSquare.createFromJSON(json._data[x][y]);
+            for (let x = 0; x < json._data[y].length; x++) {
+                object._data[y][x] = GameMapSquare.createFromJSON(json._data[y][x]);
             }
         }
 
@@ -33,7 +33,7 @@ export default class GameMap extends GameObject {
     }
 
     square(x, y) {
-        const object = this._data[x][y];
+        const object = this._data[y][x];
         if (!object) {
             throw new RangeError(`GameMap: nothing found for x ${x} and y ${y}`);
         }
