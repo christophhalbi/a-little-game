@@ -41,8 +41,8 @@ export default class Unit extends GameObject {
         super.fireCustomEvent('onUnitMoved', { detail: { gameObject: this } });
     }
 
-    moveDone() {
-        super.fireCustomEvent('onUnitMoveDone', { detail: { gameObject: this } });
+    movementComplete() {
+        super.fireCustomEvent('onUnitMovementComplete', { detail: { gameObject: this } });
     }
 
     built() {

@@ -69,7 +69,7 @@ export default class UISelection extends UIObject {
     }
 
     renderDetails() {
-        if (this._gameObject === null) {
+        if (this._gameObject === undefined) {
             return '';
         }
 

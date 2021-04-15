@@ -45,15 +45,21 @@ export default class GameData {
 
         this._map = GameMap.createFromJSON(json.map);
 
+        let unitsInsideBuildings = new Set();
+
         json.buildings.forEach(building => {
             const className = eval(building._class);
 
             building._position = this._map.square(building._position._x, building._position._y);
+            building._units.forEach(unit => { // collect units which are inside buildings
+                unitsInsideBuildings.add(unit._id);
+            });
 
             this._buildings.push(className.createFromJSON(building));
         });
 
-        json.units.forEach(unit => {
+        // don't create units which are inside buildings yet to avoid rendering in same container as building
+        json.units.filter(unit => !unitsInsideBuildings.has(unit._id)).forEach(unit => {
             const className = eval(unit._class);
 
             unit._position = this._map.square(unit._position._x, unit._position._y);
@@ -62,16 +68,22 @@ export default class GameData {
         });
 
         this._buildings.forEach(building => {
-            if (building._units.length) {
+            if (building.units.length) { // initialize homed units
                 let units = [];
-                building._units.forEach(unitData => {
-                    const unitObject = this._units.find(unit => unit._id === unitData._id);
+                building.units.forEach(unit => {
+                    const className = eval(unit._class);
 
-                    if (!unitObject) {
-                        throw new InternalError('GameData: unit not found');
-                    }
+                    // set buildTime to 0 to avoid firing of event which triggers rendering and set it back afterwards
+                    unit._position = this._map.square(unit._position._x, unit._position._y);
+                    unit._buildTime = 0;
+
+                    const unitObject = className.createFromJSON(unit);
+
+                    unitObject._buildTime = className.timeToBuild;
 
                     units.push(unitObject);
+
+                    this._units.push(unitObject);
                 });
                 building._units = units;
             }
@@ -149,7 +161,7 @@ export default class GameData {
 
             if (currentX === toX && currentY === toY) {
                 arr.splice(index, 1);
-                item[0].moveDone();
+                item[0].movementComplete();
             }
             else if (currentX < toX) {
                 item[0].updatePosition(this._map.square(currentX + 1, currentY));
@@ -243,10 +255,6 @@ export default class GameData {
     removeBuilding(gameObject) {
         const index = this._buildings.findIndex(building => building.id === gameObject.id);
         this._buildings.splice(index, 1);
-    }
-
-    homeUnit(building, unit) {
-        building.homeUnit(unit);
     }
 
     throwOutUnit(building, unit) {
