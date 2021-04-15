@@ -3,6 +3,8 @@ import UIObject from './object.js';
 
 export default class UIBuildQueue extends UIObject {
 
+    _count = 0;
+
     constructor() {
         super();
         this._id = 'ui-buildqueue';
@@ -15,10 +17,19 @@ export default class UIBuildQueue extends UIObject {
 
             if (gameObject.built()) {
                 node.remove();
+                this._count--;
             }
         }
         else {
             document.querySelector(`#${this._id} div`).insertAdjacentHTML('beforeend', this.renderObject(gameObject));
+            this._count++;
+        }
+
+        if (this._count > 0) {
+            document.querySelector(`#${this._id} em`).classList.add('d-none');
+        }
+        else {
+            document.querySelector(`#${this._id} em`).classList.remove('d-none');
         }
     }
 
@@ -31,8 +42,9 @@ export default class UIBuildQueue extends UIObject {
 
     render() {
         return `<div id="${this._id}">
-            <span>Buildqueue</span>
+            <strong class="border-bottom">Buildqueue</strong>
             <div>
+                <em>Nothing in queue</em>
             </div>
         </div>`
     }

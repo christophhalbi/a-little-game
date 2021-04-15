@@ -69,31 +69,34 @@ export default class UISelection extends UIObject {
     }
 
     renderDetails() {
-        if (this._gameObject === undefined) {
+        if (this._gameObject === undefined || this._gameObject === null) {
             return '';
         }
 
         if (this._gameObject instanceof GameMapSquare) {
-            let content = `<span>${this._gameObject.resourceInfo().join('<br/>')}</span><br/>`;
+            let content = `
+                <span>Map x = ${this._gameObject.x + 1}, y = ${this._gameObject.y + 1}</span>
+                <br/><br/>
+                <small>${this._gameObject.resourceInfo().join('<br/>')}</small>
+                <br/><br/>
+                <span class="border-bottom">Create</span><br/>`;
 
             for (let className of this._gameObject.produceableBuildings()) {
-                content += `<span class="ui-action" data-create-building="${className.name}" title="${this.buildCostInfo(className)}">Create ${className.name}</span><br/>`;
+                content += `<span class="ui-action" data-create-building="${className.name}" title="${this.buildCostInfo(className)}">${className.name}</span><br/>`;
             };
 
             return content;
         }
         else {
-            let content = `<span>${this._gameObject.constructor.name}</span><br/><div class="object ${this._gameObject.displayClass()}"></div>`;
+            let content = `<span>${this._gameObject.constructor.name} x = ${this._gameObject.position.x + 1}, y = ${this._gameObject.position.y + 1}</span>
+                <br/>
+                <div class="object ${this._gameObject.displayClass()}"></div>`;
 
             if (this._gameObject.built()) {
-                content += `
-                    <span class="level">Level ${this._gameObject.level}</span><br/>
-                    <span class="ui-action" data-level_up="1">Level up</span><br/>
-                    <span class="ui-action" data-remove="1">Remove</span><br/>
-                `;
+                content += `<span class="ui-action" data-remove="1">Remove</span><br/>`;
 
                 if (this._gameObject.canProduceUnits()) {
-                    content += `<span>Units</span><br/>`;
+                    content += `<br/><span class="border-bottom">Create units</span><br/>`;
 
                     for (let className of this._gameObject.produceableUnits()) {
                         content += `<span class="ui-action" data-create-unit="${className.name}" title="${this.buildCostInfo(className)}">Create ${className.name}</span><br/>`;
@@ -101,7 +104,7 @@ export default class UISelection extends UIObject {
                 }
 
                 if (this._gameObject.canHoldUnits()) {
-                    content += `<span>Units inside</span><br/>`;
+                    content += `<br/><span class="border-bottom">Units inside</span><br/>`;
 
                     this._gameObject.units.forEach(unit => {
                         content += `<span class="ui-action" data-throw-out-unit="${unit.id}">${unit.constructor.name} Remove</span><br/>`;
@@ -120,8 +123,9 @@ export default class UISelection extends UIObject {
 
     render() {
         return `<div id="${this._id}">
-            <span>Selection</span>
+            <strong class="border-bottom">Selection</strong>
             <div>
+                <em>Nothing selected</em>
             </div>
         </div>`
     }

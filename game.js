@@ -2,6 +2,7 @@
 import GameData from './game/data.js';
 
 import UISidebar from './game/ui/sidebar.js';
+import UISidebarRight from './game/ui/sidebarright.js';
 import UIMain from './game/ui/main.js';
 
 export default class Game {
@@ -13,6 +14,7 @@ export default class Game {
 
         this._sidebar = new UISidebar();
         this._main = new UIMain();
+        this._sidebarRight = new UISidebarRight();
 
         this._targetNode.insertAdjacentHTML('beforeend', this.render());
 
@@ -104,7 +106,7 @@ export default class Game {
 
     onUnitProgressChanged(event) {
         this._sidebar.selection.update();
-        this._sidebar.buildqueue.update(event.detail.gameObject);
+        this._sidebarRight.buildqueue.update(event.detail.gameObject);
     }
 
     onUIUnitBuild(event) {
@@ -145,7 +147,7 @@ export default class Game {
         building.update();
 
         this._sidebar.selection.update();
-        this._sidebar.buildqueue.update(event.detail.gameObject);
+        this._sidebarRight.buildqueue.update(event.detail.gameObject);
     }
 
     onUIBuildingBuild(event) {
@@ -187,6 +189,7 @@ export default class Game {
         return `<div class="row">
             ${this._sidebar.render()}
             ${this._main.render()}
+            ${this._sidebarRight.render()}
         </div>`;
     }
 }

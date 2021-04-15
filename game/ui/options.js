@@ -27,7 +27,7 @@ export default class UIOptions extends UIObject {
 
     render() {
         return `<div id="${this._id}">
-            <span>Options</span>
+            <strong class="border-bottom">Options</strong>
             <div>
                 <span class="ui-action" data-save="1">Save</span><br/>
                 <span class="ui-action" data-reset="1">Reset</span><br/>

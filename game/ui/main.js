@@ -26,12 +26,12 @@ export default class UIMain extends UIObject {
     }
 
     render() {
-        return `<div class="col-10" id="ui-content">
-            <div class="row">
-                <div class="col-6">
+        return `<div class="col-8" id="ui-content">
+            <div class="row my-3">
+                <div class="col-8">
                     ${this._resources.render()}
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     ${this._units.render()}
                 </div>
             </div>
