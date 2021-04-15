@@ -87,7 +87,7 @@ export default class Game {
 
     onUnitMoved(event) {
         const unit = this._main.map.findUnit(event.detail.gameObject);
-        unit.moveToPosition();
+        //unit.moveToPosition();
     }
 
     onUnitMoveDone(event) {
@@ -118,10 +118,85 @@ export default class Game {
     }
 
     onUIMoveRequest(event) {
-        const gameObject = this._sidebar.selection.get();
+        const unitObject = this._sidebar.selection.get();
 
-        if (gameObject && gameObject.moveable) {
-            this._data.addMovement(gameObject, event.detail.gameObject);
+        if (unitObject && unitObject.moveable) {
+            const squareObject = event.detail.gameObject;
+
+            const unit = this._main.map.findUnit(unitObject);
+
+            const unitNode = unit.node();
+
+            const x = (squareObject.x - unitObject.position.x) * 40;
+            const y = (squareObject.y - unitObject.position.y) * 40;
+
+            let distance;
+            if (x === 0) {
+                distance = Math.abs(y);
+            }
+            else if (y === 0) {
+                distance = Math.abs(x);
+            }
+            else {
+                distance = Math.sqrt((x * x) + (y * y));
+            }
+
+            console.log(`x ${x}px, y ${y}px, ${distance}`);
+
+            let start;
+            let frame;
+
+            function step(timestamp) {
+                if (start === undefined)
+                    start = timestamp;
+                const elapsed = timestamp - start;
+
+                if (x === 0) {
+                    // `Math.min()` is used here to make sure that the element stops
+                    if (y < 0) {
+                        unitNode.style.transform = `translateY(-${Math.max(0.1 * elapsed, y)}px)`;
+                    }
+                    else {
+                        unitNode.style.transform = `translateY(${Math.min(0.1 * elapsed, y)}px)`;
+                    }
+                }
+                else if (y === 0) {
+                    // `Math.min()` is used here to make sure that the element stops
+                    if (x < 0) {
+                        unitNode.style.transform = `translateX(-${Math.max(0.1 * elapsed, x)}px)`;
+                    }
+                    else {
+                        unitNode.style.transform = `translateX(${Math.min(0.1 * elapsed, x)}px)`;
+                    }
+                }
+                else {
+                    if (x > 0 && y > 0) {
+                        unitNode.style.transform = `translate(${Math.min(0.1 * elapsed, x)}px, ${Math.min(0.1 * elapsed, y)}px)`;
+                    }
+                    else if (x > 0 && y < 0) {
+                        unitNode.style.transform = `translate(${Math.min(0.1 * elapsed, x)}px, -${Math.max(0.1 * elapsed, y)}px)`;
+                    }
+                    else if (x < 0 && y < 0) {
+                        unitNode.style.transform = `translate(-${Math.max(0.1 * elapsed, x)}px, -${Math.max(0.1 * elapsed, y)}px)`;
+                    }
+                    else if (x < 0 && y > 0) {
+                        unitNode.style.transform = `translate(-${Math.max(0.1 * elapsed, x)}px, ${Math.min(0.1 * elapsed, y)}px)`;
+                    }
+                }
+
+                if (elapsed < (distance * 10)) { // Stop the animation
+                    window.requestAnimationFrame(step);
+                }
+                else {
+                    window.cancelAnimationFrame(frame);
+                }
+            }
+
+            frame = window.requestAnimationFrame(step);
+
+            //unitNode.style.setProperty("WebkitTransform", "none");
+
+            //document.querySelector(`div[data-game-object-id="${squareObject.id}"]`).appendChild(unitNode);
         }
     }
 

@@ -103,7 +103,7 @@ export default class GameData {
 
         this._buildings.push(new Castle(this._map.square(6, 5), Castle.timeToBuild));
 
-        this._units.push(new Soldier(this._map.square(5, 4), Soldier.timeToBuild));
+        this._units.push(new Soldier(this._map.square(0, 0), Soldier.timeToBuild));
         this._units.push(new Soldier(this._map.square(8, 1), Soldier.timeToBuild));
         this._units.push(new Soldier(this._map.square(8, 2), Soldier.timeToBuild));
         this._units.push(new Worker(this._map.square(12, 5), Soldier.timeToBuild));
